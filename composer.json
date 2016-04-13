@@ -1,0 +1,35 @@
+{
+    "name": "mwsimple/admin-crud",
+    "description": "This bundle admin crud",
+    "keywords": ["admin", "crud", "bootstrap"],
+    "homepage": "https://github.com/MWSimple/AdminCrudBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gonzalo Alonso",
+            "email": "gonkpo@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/symfony": ">2.2.0, ~2.7",
+        "sensio/generator-bundle": ">2.2.0, ~2.5",
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "lexik/form-filter-bundle": "~3.0",
+        "knplabs/knp-menu": "~2.0",
+        "knplabs/knp-menu-bundle": "~2.0",
+        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
+        "sonata-project/exporter": "~1.4",
+        "symfony/finder": "^2.8"
+    },
+    "autoload": {
+        "psr-0": {"MWSimple\\Bundle\\ForoBundle": ""}
+    },
+    "target-dir": "MWSimple/Bundle/AdminCrudBundle",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-version27": "3.0.x-dev"
+        }
+    }
+}
