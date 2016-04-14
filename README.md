@@ -13,3 +13,32 @@ Gonzalo Alonso - gonkpo@gmail.com
 ## Collaborators
 
 Max Shtefec - max.shtefec@gmail.com
+
+## Installation
+
+### Using composer
+
+Add following lines to your `composer.json` file:
+
+### Support Symfony 2.7.* + Include Boostrap 3
+
+```json
+"require": {
+    ...
+    "mwsimple/foro": "1.0.*@dev",
+}
+```
+
+Execute:
+
+```cli
+php composer.phar update "mwsimple/foro"
+```
+
+Add it to the `AppKernel.php` class:
+
+```php
+// ...
+new MWSimple\Bundle\ForoBundle\ForoBundle(),
+```
+
