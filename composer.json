@@ -9,10 +9,6 @@
         {
             "name": "Gonzalo Alonso",
             "email": "gonkpo@gmail.com"
-        },
-        {
-            "name": "Max Shtefec",
-            "email": "max.shtefec@gmail.com"
         }
     ],
     "autoload": {
