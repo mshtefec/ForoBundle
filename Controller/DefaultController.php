@@ -1,13 +1,19 @@
 <?php
 
-namespace ForoBundle\Controller;
+namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/hello/{name}")
+     * @Template()
+     */
     public function indexAction($name)
     {
-        return $this->render('ForoBundle:Default:index.html.twig', array('name' => $name));
+        return array('name' => $name);
     }
 }
