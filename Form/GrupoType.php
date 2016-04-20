@@ -12,16 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class GrupoType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('nombre')
-        ;
-    }
     
     /**
      * @param OptionsResolverInterface $resolver
@@ -38,6 +28,6 @@ class GrupoType extends AbstractType
      */
     public function getName()
     {
-        return 'mwsimple_bundle_forobundle_grupo';
+        return 'sistema_forobundle_grupo';
     }
 }

@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="mw_simple_foro.example" class="MWSimple\Bundle\ForoBundle\Example">
+        <service id="sistema_foro.example" class="MWSimple\Bundle\ForoBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

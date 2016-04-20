@@ -22,7 +22,6 @@ class EntradaFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo', 'filter_text_like')
         ;
 
         $listener = function(FormEvent $event)
@@ -61,6 +60,6 @@ class EntradaFilterType extends AbstractType
      */
     public function getName()
     {
-        return 'mwsimple_bundle_forobundle_entradafiltertype';
+        return 'sistema_forobundle_entradafiltertype';
     }
 }

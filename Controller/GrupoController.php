@@ -15,7 +15,7 @@ use MWSimple\Bundle\ForoBundle\Form\GrupoFilterType;
  * Grupo controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/grupo")
+ * @Route("/foro/grupo")
  */
 class GrupoController extends Controller
 {
@@ -23,13 +23,13 @@ class GrupoController extends Controller
      * Configuration file.
      */
     protected $config = array(
-        'yml' => 'MWSimple/Bundle/ForoBundle/Resources/config/Grupo.yml',
+        'yml' => 'Sistema/ForoBundle/Resources/config/Grupo.yml',
     );
 
     /**
      * Lists all Grupo entities.
      *
-     * @Route("/", name="grupo")
+     * @Route("/", name="foro_grupo")
      * @Method("GET")
      * @Template()
      */
@@ -44,9 +44,9 @@ class GrupoController extends Controller
     /**
      * Creates a new Grupo entity.
      *
-     * @Route("/", name="grupo_create")
+     * @Route("/", name="foro_grupo_create")
      * @Method("POST")
-     * @Template("MWSimpleForoBundle:Grupo:new.html.twig")
+     * @Template("SistemaForoBundle:Grupo:new.html.twig")
      */
     public function createAction()
     {
@@ -59,7 +59,7 @@ class GrupoController extends Controller
     /**
      * Displays a form to create a new Grupo entity.
      *
-     * @Route("/new", name="grupo_new")
+     * @Route("/new", name="foro_grupo_new")
      * @Method("GET")
      * @Template()
      */
@@ -74,7 +74,7 @@ class GrupoController extends Controller
     /**
      * Finds and displays a Grupo entity.
      *
-     * @Route("/{id}", name="grupo_show")
+     * @Route("/{id}", name="foro_grupo_show")
      * @Method("GET")
      * @Template()
      */
@@ -88,7 +88,7 @@ class GrupoController extends Controller
     /**
      * Displays a form to edit an existing Grupo entity.
      *
-     * @Route("/{id}/edit", name="grupo_edit")
+     * @Route("/{id}/edit", name="foro_grupo_edit")
      * @Method("GET")
      * @Template()
      */
@@ -103,9 +103,9 @@ class GrupoController extends Controller
     /**
      * Edits an existing Grupo entity.
      *
-     * @Route("/{id}", name="grupo_update")
+     * @Route("/{id}", name="foro_grupo_update")
      * @Method("PUT")
-     * @Template("MWSimpleForoBundle:Grupo:edit.html.twig")
+     * @Template("SistemaForoBundle:Grupo:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -118,7 +118,7 @@ class GrupoController extends Controller
     /**
      * Deletes a Grupo entity.
      *
-     * @Route("/{id}", name="grupo_delete")
+     * @Route("/{id}", name="foro_grupo_delete")
      * @Method("DELETE")
      */
     public function deleteAction($id)
@@ -131,11 +131,43 @@ class GrupoController extends Controller
     /**
      * Exporter Grupo.
      *
-     * @Route("/exporter/{format}", name="grupo_export")
+     * @Route("/exporter/{format}", name="foro_grupo_export")
      */
     public function getExporter($format)
     {
         $response = parent::exportCsvAction($format);
+
+        return $response;
+    }
+
+    /**
+     * Autocomplete a Grupo entity.
+     *
+     * @Route("/autocomplete-forms/get-miembros", name="Grupo_autocomplete_miembros")
+     */
+    public function getAutocompleteUser()
+    {
+        $options = array(
+            'repository' => "SistemaForoBundle:User",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
+
+        return $response;
+    }
+
+    /**
+     * Autocomplete a Grupo entity.
+     *
+     * @Route("/autocomplete-forms/get-entrada", name="Grupo_autocomplete_entrada")
+     */
+    public function getAutocompleteEntrada()
+    {
+        $options = array(
+            'repository' => "SistemaForoBundle:Entrada",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
 
         return $response;
     }

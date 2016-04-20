@@ -12,16 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class RespuestaType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('contenido')
-        ;
-    }
     
     /**
      * @param OptionsResolverInterface $resolver
@@ -38,6 +28,6 @@ class RespuestaType extends AbstractType
      */
     public function getName()
     {
-        return 'mwsimple_bundle_forobundle_respuesta';
+        return 'sistema_forobundle_respuesta';
     }
 }

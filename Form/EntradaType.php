@@ -12,16 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class EntradaType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('titulo')
-        ;
-    }
     
     /**
      * @param OptionsResolverInterface $resolver
@@ -38,6 +28,6 @@ class EntradaType extends AbstractType
      */
     public function getName()
     {
-        return 'mwsimple_bundle_forobundle_entrada';
+        return 'sistema_forobundle_entrada';
     }
 }

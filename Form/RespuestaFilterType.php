@@ -22,7 +22,6 @@ class RespuestaFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenido', 'filter_text_like')
         ;
 
         $listener = function(FormEvent $event)
@@ -61,6 +60,6 @@ class RespuestaFilterType extends AbstractType
      */
     public function getName()
     {
-        return 'mwsimple_bundle_forobundle_respuestafiltertype';
+        return 'sistema_forobundle_respuestafiltertype';
     }
 }

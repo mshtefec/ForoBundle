@@ -4,7 +4,7 @@ namespace MWSimple\Bundle\ForoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class GrupoControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class GrupoControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/foro/grupo/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /foro/grupo/");
+        $crawler = $client->request('GET', '/foro/user/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /foro/user/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'sistema_forobundle_grupo[field_name]'  => 'Test',
+            'sistema_forobundle_user[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class GrupoControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'sistema_forobundle_grupo[field_name]'  => 'Foo',
+            'sistema_forobundle_user[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

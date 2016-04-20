@@ -13,13 +13,13 @@ class RespuestaControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/respuesta/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /respuesta/");
+        $crawler = $client->request('GET', '/foro/respuesta/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /foro/respuesta/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'mwsimple_bundle_forobundle_respuesta[field_name]'  => 'Test',
+            'sistema_forobundle_respuesta[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class RespuestaControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'mwsimple_bundle_forobundle_respuesta[field_name]'  => 'Foo',
+            'sistema_forobundle_respuesta[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

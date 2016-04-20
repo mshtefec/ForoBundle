@@ -10,10 +10,10 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormError;
 
 /**
- * GrupoFilterType filtro.
+ * UserFilterType filtro.
  * @author Nombre Apellido <name@gmail.com>
  */
-class GrupoFilterType extends AbstractType
+class UserFilterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,6 +22,8 @@ class GrupoFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('userId', 'filter_number_range')
+            ->add('isEditor', 'filter_choice')
         ;
 
         $listener = function(FormEvent $event)
@@ -51,7 +53,7 @@ class GrupoFilterType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MWSimple\Bundle\ForoBundle\Entity\Grupo'
+            'data_class' => 'MWSimple\Bundle\ForoBundle\Entity\User'
         ));
     }
 
@@ -60,6 +62,6 @@ class GrupoFilterType extends AbstractType
      */
     public function getName()
     {
-        return 'sistema_forobundle_grupofiltertype';
+        return 'sistema_forobundle_userfiltertype';
     }
 }

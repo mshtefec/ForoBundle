@@ -15,7 +15,7 @@ use MWSimple\Bundle\ForoBundle\Form\EntradaFilterType;
  * Entrada controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/entrada")
+ * @Route("/foro/entrada")
  */
 class EntradaController extends Controller
 {
@@ -23,13 +23,13 @@ class EntradaController extends Controller
      * Configuration file.
      */
     protected $config = array(
-        'yml' => 'MWSimple/Bundle/ForoBundle/Resources/config/Entrada.yml',
+        'yml' => 'Sistema/ForoBundle/Resources/config/Entrada.yml',
     );
 
     /**
      * Lists all Entrada entities.
      *
-     * @Route("/", name="entrada")
+     * @Route("/", name="foro_entrada")
      * @Method("GET")
      * @Template()
      */
@@ -44,9 +44,9 @@ class EntradaController extends Controller
     /**
      * Creates a new Entrada entity.
      *
-     * @Route("/", name="entrada_create")
+     * @Route("/", name="foro_entrada_create")
      * @Method("POST")
-     * @Template("MWSimpleForoBundle:Entrada:new.html.twig")
+     * @Template("SistemaForoBundle:Entrada:new.html.twig")
      */
     public function createAction()
     {
@@ -59,7 +59,7 @@ class EntradaController extends Controller
     /**
      * Displays a form to create a new Entrada entity.
      *
-     * @Route("/new", name="entrada_new")
+     * @Route("/new", name="foro_entrada_new")
      * @Method("GET")
      * @Template()
      */
@@ -74,7 +74,7 @@ class EntradaController extends Controller
     /**
      * Finds and displays a Entrada entity.
      *
-     * @Route("/{id}", name="entrada_show")
+     * @Route("/{id}", name="foro_entrada_show")
      * @Method("GET")
      * @Template()
      */
@@ -88,7 +88,7 @@ class EntradaController extends Controller
     /**
      * Displays a form to edit an existing Entrada entity.
      *
-     * @Route("/{id}/edit", name="entrada_edit")
+     * @Route("/{id}/edit", name="foro_entrada_edit")
      * @Method("GET")
      * @Template()
      */
@@ -103,9 +103,9 @@ class EntradaController extends Controller
     /**
      * Edits an existing Entrada entity.
      *
-     * @Route("/{id}", name="entrada_update")
+     * @Route("/{id}", name="foro_entrada_update")
      * @Method("PUT")
-     * @Template("MWSimpleForoBundle:Entrada:edit.html.twig")
+     * @Template("SistemaForoBundle:Entrada:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -118,7 +118,7 @@ class EntradaController extends Controller
     /**
      * Deletes a Entrada entity.
      *
-     * @Route("/{id}", name="entrada_delete")
+     * @Route("/{id}", name="foro_entrada_delete")
      * @Method("DELETE")
      */
     public function deleteAction($id)
@@ -131,11 +131,59 @@ class EntradaController extends Controller
     /**
      * Exporter Entrada.
      *
-     * @Route("/exporter/{format}", name="entrada_export")
+     * @Route("/exporter/{format}", name="foro_entrada_export")
      */
     public function getExporter($format)
     {
         $response = parent::exportCsvAction($format);
+
+        return $response;
+    }
+
+    /**
+     * Autocomplete a Entrada entity.
+     *
+     * @Route("/autocomplete-forms/get-autor", name="Entrada_autocomplete_autor")
+     */
+    public function getAutocompleteUser()
+    {
+        $options = array(
+            'repository' => "SistemaForoBundle:User",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
+
+        return $response;
+    }
+
+    /**
+     * Autocomplete a Entrada entity.
+     *
+     * @Route("/autocomplete-forms/get-grupo", name="Entrada_autocomplete_grupo")
+     */
+    public function getAutocompleteGrupo()
+    {
+        $options = array(
+            'repository' => "SistemaForoBundle:Grupo",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
+
+        return $response;
+    }
+
+    /**
+     * Autocomplete a Entrada entity.
+     *
+     * @Route("/autocomplete-forms/get-respuestas", name="Entrada_autocomplete_respuestas")
+     */
+    public function getAutocompleteRespuesta()
+    {
+        $options = array(
+            'repository' => "SistemaForoBundle:Respuesta",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
 
         return $response;
     }

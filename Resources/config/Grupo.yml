@@ -1,14 +1,14 @@
 entityName: 'Grupo'
 entity: 'MWSimple\Bundle\ForoBundle\Entity\Grupo'
-repository: 'MWSimpleForoBundle:Grupo'
-index: 'grupo'
-new: 'grupo_new'
-edit: 'grupo_edit'
-show: 'grupo_show'
-create: 'grupo_create'
-update: 'grupo_update'
-delete: 'grupo_delete'
-export: 'grupo_export'
+repository: 'SistemaForoBundle:Grupo'
+index: 'foro_grupo'
+new: 'foro_grupo_new'
+edit: 'foro_grupo_edit'
+show: 'foro_grupo_show'
+create: 'foro_grupo_create'
+update: 'foro_grupo_update'
+delete: 'foro_grupo_delete'
+export: 'foro_grupo_export'
 sessionFilter: 'GrupoControllerFilter'
 saveAndAdd: true
 fieldsindex:
@@ -17,11 +17,6 @@ fieldsindex:
         name: 'Id'
         type: 'integer'
         export: true
-    a.nombre:
-        label: 'Nombre'
-        name: 'Nombre'
-        type: 'string'
-        export: true
 fieldsshow:
     a.id:
         label: 'Id'
@@ -29,9 +24,15 @@ fieldsshow:
         type: 'integer'
         #class: 'col-lg-12'
         #closerow: true
-    a.nombre:
-        label: 'Nombre'
-        name: 'Nombre'
-        type: 'string'
+    a.miembros:
+        label: 'Miembros'
+        name: 'Miembros'
+        type: 'ONE_TO_MANY'
+        #class: 'col-lg-12'
+        #closerow: true
+    a.entrada:
+        label: 'Entrada'
+        name: 'Entrada'
+        type: 'ONE_TO_MANY'
         #class: 'col-lg-12'
         #closerow: true
