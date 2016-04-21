@@ -3,10 +3,11 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
+use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
 use MWSimple\Bundle\ForoBundle\Entity\Grupo;
 use MWSimple\Bundle\ForoBundle\Form\GrupoType;
 use MWSimple\Bundle\ForoBundle\Form\GrupoFilterType;
@@ -15,7 +16,7 @@ use MWSimple\Bundle\ForoBundle\Form\GrupoFilterType;
  * Grupo controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/foro/grupo")
+ * @Route("/admin/foro/grupo")
  */
 class GrupoController extends Controller
 {
@@ -23,13 +24,26 @@ class GrupoController extends Controller
      * Configuration file.
      */
     protected $config = array(
-        'yml' => 'Sistema/ForoBundle/Resources/config/Grupo.yml',
+        'yml' => '/../Resources/config/Grupo.yml',
     );
+
+    protected function getConfig(){
+        $configs = Yaml::parse(file_get_contents(__DIR__ . $this->config['yml']));
+        foreach ($configs as $key => $value) {
+            $config[$key] = $value;
+        }
+        foreach ($this->config as $key => $value) {
+            if ($key != 'yml') {
+                $config[$key] = $value;
+            }
+        }
+        return $config;
+    }
 
     /**
      * Lists all Grupo entities.
      *
-     * @Route("/", name="foro_grupo")
+     * @Route("/", name="admin_grupo_foro")
      * @Method("GET")
      * @Template()
      */

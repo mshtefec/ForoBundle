@@ -3,10 +3,11 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
+use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
 use MWSimple\Bundle\ForoBundle\Entity\User;
 use MWSimple\Bundle\ForoBundle\Form\UserType;
 use MWSimple\Bundle\ForoBundle\Form\UserFilterType;
@@ -23,8 +24,21 @@ class UserController extends Controller
      * Configuration file.
      */
     protected $config = array(
-        'yml' => 'Sistema/ForoBundle/Resources/config/User.yml',
+        'yml' => '/../Resources/config/User.yml',
     );
+
+    protected function getConfig(){
+        $configs = Yaml::parse(file_get_contents(__DIR__ . $this->config['yml']));
+        foreach ($configs as $key => $value) {
+            $config[$key] = $value;
+        }
+        foreach ($this->config as $key => $value) {
+            if ($key != 'yml') {
+                $config[$key] = $value;
+            }
+        }
+        return $config;
+    }
 
     /**
      * Lists all User entities.

@@ -1,6 +1,6 @@
 entityName: 'Entrada'
 entity: 'MWSimple\Bundle\ForoBundle\Entity\Entrada'
-repository: 'SistemaForoBundle:Entrada'
+repository: 'MWSimpleForoBundle:Entrada'
 index: 'foro_entrada'
 new: 'foro_entrada_new'
 edit: 'foro_entrada_edit'
@@ -17,36 +17,47 @@ fieldsindex:
         name: 'Id'
         type: 'integer'
         export: true
+    a.titulo:
+        label: 'Titulo'
+        name: 'Titulo'
+        type: 'string'
+        export: true
     a.autor:
         label: 'Autor'
         name: 'Autor'
-        type: 'ONE_TO_ONE'
+        type: 'MANY_TO_ONE'
     a.grupo:
-        label: 'Grupo'
+        label: 'Foro'
         name: 'Grupo'
         type: 'MANY_TO_ONE'
 fieldsshow:
-    a.id:
-        label: 'Id'
-        name: 'Id'
-        type: 'integer'
-        #class: 'col-lg-12'
-        #closerow: true
+    # a.id:
+    #     label: 'Id'
+    #     name: 'Id'
+    #     type: 'integer'
+    #     #class: 'col-lg-12'
+    #     #closerow: true
+    a.titulo:
+        label: 'Titulo'
+        name: 'Titulo'
+        type: 'string'
+        class: 'col-lg-8'
+        closerow: true
+    a.grupo:
+        label: 'Foro'
+        name: 'Grupo'
+        type: 'MANY_TO_ONE'
+        class: 'col-lg-6'
+        # closerow: true
     a.autor:
         label: 'Autor'
         name: 'Autor'
-        type: 'ONE_TO_ONE'
-        #class: 'col-lg-12'
-        #closerow: true
-    a.grupo:
-        label: 'Grupo'
-        name: 'Grupo'
         type: 'MANY_TO_ONE'
-        #class: 'col-lg-12'
-        #closerow: true
-    a.respuestas:
-        label: 'Respuestas'
-        name: 'Respuestas'
-        type: 'ONE_TO_MANY'
-        #class: 'col-lg-12'
-        #closerow: true
+        class: 'col-lg-6'
+        closerow: true
+    # a.respuestas:
+    #     label: 'Respuestas'
+    #     name: 'Respuestas'
+    #     type: 'ONE_TO_MANY'
+    #     #class: 'col-lg-12'
+    #     #closerow: true

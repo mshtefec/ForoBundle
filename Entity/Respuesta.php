@@ -30,7 +30,7 @@ class Respuesta
     private $contenido;
 
     /**
-     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\User", inversedBy="respuesta")
+     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Usuario", inversedBy="respuesta")
      * @ORM\JoinColumn(name="miembro_id", referencedColumnName="id")
      */
     private $miembro;
@@ -49,5 +49,92 @@ class Respuesta
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->entrada = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set contenido
+     *
+     * @param string $contenido
+     * @return Respuesta
+     */
+    public function setContenido($contenido)
+    {
+        $this->contenido = $contenido;
+
+        return $this;
+    }
+
+    /**
+     * Get contenido
+     *
+     * @return string 
+     */
+    public function getContenido()
+    {
+        return $this->contenido;
+    }
+
+    /**
+     * Set miembro
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Usuario $miembro
+     * @return Respuesta
+     */
+    public function setMiembro(\MWSimple\Bundle\ForoBundle\Entity\Usuario $miembro = null)
+    {
+        $this->miembro = $miembro;
+
+        return $this;
+    }
+
+    /**
+     * Get miembro
+     *
+     * @return \MWSimple\Bundle\ForoBundle\Entity\Usuario 
+     */
+    public function getMiembro()
+    {
+        return $this->miembro;
+    }
+
+    /**
+     * Add entrada
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
+     * @return Respuesta
+     */
+    public function addEntrada(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada)
+    {
+        $this->entrada[] = $entrada;
+
+        return $this;
+    }
+
+    /**
+     * Remove entrada
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
+     */
+    public function removeEntrada(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada)
+    {
+        $this->entrada->removeElement($entrada);
+    }
+
+    /**
+     * Get entrada
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEntrada()
+    {
+        return $this->entrada;
     }
 }

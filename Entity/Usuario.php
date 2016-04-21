@@ -72,7 +72,7 @@ class Usuario
      * Set userId
      *
      * @param integer $userId
-     * @return User
+     * @return test
      */
     public function setUserId($userId)
     {
@@ -89,5 +89,97 @@ class Usuario
     public function getUserId()
     {
         return $this->userId;
+    }
+
+    /**
+     * Set isEditor
+     *
+     * @param boolean $isEditor
+     * @return test
+     */
+    public function setIsEditor($isEditor)
+    {
+        $this->isEditor = $isEditor;
+
+        return $this;
+    }
+
+    /**
+     * Get isEditor
+     *
+     * @return boolean 
+     */
+    public function getIsEditor()
+    {
+        return $this->isEditor;
+    }
+
+    /**
+     * Set entrada
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
+     * @return test
+     */
+    public function setEntrada(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada = null)
+    {
+        $this->entrada = $entrada;
+
+        return $this;
+    }
+
+    /**
+     * Get entrada
+     *
+     * @return \MWSimple\Bundle\ForoBundle\Entity\Entrada 
+     */
+    public function getEntrada()
+    {
+        return $this->entrada;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Grupo $grupo
+     * @return test
+     */
+    public function setGrupo(\MWSimple\Bundle\ForoBundle\Entity\Grupo $grupo = null)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return \MWSimple\Bundle\ForoBundle\Entity\Grupo 
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
+     * Set respuesta
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Respuesta $respuesta
+     * @return test
+     */
+    public function setRespuesta(\MWSimple\Bundle\ForoBundle\Entity\Respuesta $respuesta = null)
+    {
+        $this->respuesta = $respuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get respuesta
+     *
+     * @return \MWSimple\Bundle\ForoBundle\Entity\Respuesta 
+     */
+    public function getRespuesta()
+    {
+        return $this->respuesta;
     }
 }

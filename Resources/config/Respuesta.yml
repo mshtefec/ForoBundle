@@ -1,6 +1,6 @@
 entityName: 'Respuesta'
 entity: 'MWSimple\Bundle\ForoBundle\Entity\Respuesta'
-repository: 'SistemaForoBundle:Respuesta'
+repository: 'MWSimpleForoBundle:Respuesta'
 index: 'foro_respuesta'
 new: 'foro_respuesta_new'
 edit: 'foro_respuesta_edit'
@@ -17,6 +17,11 @@ fieldsindex:
         name: 'Id'
         type: 'integer'
         export: true
+    a.contenido:
+        label: 'Contenido'
+        name: 'Contenido'
+        type: 'text'
+        export: true
     a.miembro:
         label: 'Miembro'
         name: 'Miembro'
@@ -26,6 +31,12 @@ fieldsshow:
         label: 'Id'
         name: 'Id'
         type: 'integer'
+        #class: 'col-lg-12'
+        #closerow: true
+    a.contenido:
+        label: 'Contenido'
+        name: 'Contenido'
+        type: 'text'
         #class: 'col-lg-12'
         #closerow: true
     a.miembro:

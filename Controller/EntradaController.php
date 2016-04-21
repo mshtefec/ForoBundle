@@ -3,10 +3,11 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
+use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
 use MWSimple\Bundle\ForoBundle\Entity\Entrada;
 use MWSimple\Bundle\ForoBundle\Form\EntradaType;
 use MWSimple\Bundle\ForoBundle\Form\EntradaFilterType;
@@ -23,8 +24,21 @@ class EntradaController extends Controller
      * Configuration file.
      */
     protected $config = array(
-        'yml' => 'Sistema/ForoBundle/Resources/config/Entrada.yml',
+        'yml' => '/../Resources/config/Entrada.yml',
     );
+
+    protected function getConfig(){
+        $configs = Yaml::parse(file_get_contents(__DIR__ . $this->config['yml']));
+        foreach ($configs as $key => $value) {
+            $config[$key] = $value;
+        }
+        foreach ($this->config as $key => $value) {
+            if ($key != 'yml') {
+                $config[$key] = $value;
+            }
+        }
+        return $config;
+    }
 
     /**
      * Lists all Entrada entities.
@@ -140,21 +154,21 @@ class EntradaController extends Controller
         return $response;
     }
 
-    /**
-     * Autocomplete a Entrada entity.
-     *
-     * @Route("/autocomplete-forms/get-autor", name="Entrada_autocomplete_autor")
-     */
-    public function getAutocompleteUser()
-    {
-        $options = array(
-            'repository' => "SistemaForoBundle:User",
-            'field'      => "id",
-        );
-        $response = parent::getAutocompleteFormsMwsAction($options);
+    // /**
+    //  * Autocomplete a Entrada entity.
+    //  *
+    //  * @Route("/autocomplete-forms/get-autor", name="Entrada_autocomplete_autor")
+    //  */
+    // public function getAutocompleteUser()
+    // {
+    //     $options = array(
+    //         'repository' => "SistemaForoBundle:User",
+    //         'field'      => "id",
+    //     );
+    //     $response = parent::getAutocompleteFormsMwsAction($options);
 
-        return $response;
-    }
+    //     return $response;
+    // }
 
     /**
      * Autocomplete a Entrada entity.

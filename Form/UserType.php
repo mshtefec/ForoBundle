@@ -19,7 +19,6 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userId')
             ->add('isEditor')
             ->add('entrada', 'select2', array(
                 'class' => 'MWSimple\Bundle\ForoBundle\Entity\Entrada',
