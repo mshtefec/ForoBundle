@@ -116,3 +116,26 @@ class Grupo extends BaseGrupo {
     ...
 }
 ```
+
+## Configure Routing yml
+
+#### Entrada Entity
+```yaml
+mw_simple_front:
+    resource: "@MWSimpleForoBundle/Controller/"
+    type:     annotation
+    prefix:   /mwsadmin
+
+mw_simple_front_foro:
+    resource: "@MWSimpleForoBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /helloforo
+
+# Render Controller for example foro index
+front_foro:
+    path: /mws/
+    defaults:
+        _controller: MWSimpleForoBundle:Default:index
+        template:    index.html.twig
+```
+#

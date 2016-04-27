@@ -16,7 +16,7 @@ use MWSimple\Bundle\ForoBundle\Form\RespuestaFilterType;
  * Respuesta controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/foro/respuesta")
+ * @Route("/fororespuesta")
  */
 class RespuestaController extends Controller
 {

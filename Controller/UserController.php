@@ -16,7 +16,7 @@ use MWSimple\Bundle\ForoBundle\Form\UserFilterType;
  * User controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/foro/user")
+ * @Route("/forouser")
  */
 class UserController extends Controller
 {

@@ -16,7 +16,7 @@ use MWSimple\Bundle\ForoBundle\Form\EntradaFilterType;
  * Entrada controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/foro/entrada")
+ * @Route("/foroentrada")
  */
 class EntradaController extends Controller
 {
