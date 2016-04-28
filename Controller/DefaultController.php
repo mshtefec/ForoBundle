@@ -5,6 +5,7 @@ namespace MWSimple\Bundle\ForoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Grupo controller.
@@ -21,6 +22,30 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array('name' => "Default Index");
+    	$em = $this->getDoctrine()->getManager();
+    	$grupoForo = $em->getRepository('MWSimpleForoBundle:Grupo')->findAll();
+    	$entradas = $em->getRepository('MWSimpleForoBundle:Entrada')->findAll();
+
+        return array(
+        	'grupoForo' 	=> $grupoForo,
+        	'entradas' 		=> $entradas,
+		);
+    }
+
+    /**
+     * Finds and displays a Foro entity.
+     *
+     * @Route("/{id}", name="traer_foro", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function foroAction($id) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $grupoForo = $em->getRepository('MWSimpleForoBundle:Grupo')->find($id);   
+
+        return $this->render('MWSimpleForoBundle:Default:foro.html.twig', array(
+            'grupoForo' => $grupoForo,
+        ));
+        
     }
 }
