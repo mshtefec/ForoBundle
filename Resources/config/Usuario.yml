@@ -1,0 +1,78 @@
+entityName: 'Usuario'
+entity: 'MWSimple\Bundle\ForoBundle\Entity\Usuario'
+repository: 'MWSimpleForoBundle:Usuario'
+index: 'foro_user'
+new: 'foro_user_new'
+edit: 'foro_user_edit'
+show: 'foro_user_show'
+create: 'foro_user_create'
+update: 'foro_user_update'
+delete: 'foro_user_delete'
+export: 'foro_user_export'
+sessionFilter: 'UsuarioControllerFilter'
+saveAndAdd: true
+fieldsindex:
+    a.id:
+        label: 'Id'
+        name: 'Id'
+        type: 'integer'
+        export: true
+    # a.userId:
+    #     label: 'Userid'
+    #     name: 'Userid'
+    #     type: 'integer'
+    #     export: true
+    a.isEditor:
+        label: 'Iseditor'
+        name: 'Iseditor'
+        type: 'boolean'
+        export: true
+    a.entrada:
+        label: 'Entrada'
+        name: 'Entrada'
+        type: 'ONE_TO_ONE'
+    a.grupo:
+        label: 'Grupo'
+        name: 'Grupo'
+        type: 'MANY_TO_ONE'
+    a.respuesta:
+        label: 'Respuesta'
+        name: 'Respuesta'
+        type: 'ONE_TO_ONE'
+fieldsshow:
+    a.id:
+        label: 'Id'
+        name: 'Id'
+        type: 'integer'
+        #class: 'col-lg-12'
+        #closerow: true
+    # a.userId:
+    #     label: 'Userid'
+    #     name: 'Userid'
+    #     type: 'integer'
+    #     #class: 'col-lg-12'
+    #     #closerow: true
+    a.isEditor:
+        label: 'Iseditor'
+        name: 'Iseditor'
+        type: 'boolean'
+        #class: 'col-lg-12'
+        #closerow: true
+    a.entrada:
+        label: 'Entrada'
+        name: 'Entrada'
+        type: 'ONE_TO_ONE'
+        #class: 'col-lg-12'
+        #closerow: true
+    a.grupo:
+        label: 'Grupo'
+        name: 'Grupo'
+        type: 'MANY_TO_ONE'
+        #class: 'col-lg-12'
+        #closerow: true
+    a.respuesta:
+        label: 'Respuesta'
+        name: 'Respuesta'
+        type: 'ONE_TO_ONE'
+        #class: 'col-lg-12'
+        #closerow: true

@@ -1,6 +1,6 @@
 <?php
 
-namespace ForoBundle\Tests\Controller;
+namespace MWSimple\Bundle\ForoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
