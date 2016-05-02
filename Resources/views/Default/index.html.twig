@@ -1,41 +1,39 @@
 <br>
-<div class="row">
-  	<div class="col-md-12 col-sm-12">
-		<div class="well">
-		    <div class="media">
-		      	<div class="media-body">
-		    		<h4 class="media-heading">Problemas en Página Web</h4>
-		          	<p class="text-right">De John Snow</p>
-		          	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
-		Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
-		dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
-		Aliquam in felis sit amet augue.</p>
-		          	<ul class="list-inline list-unstyled">
-			  			<li>
-			  				<span><i class="glyphicon glyphicon-calendar"></i> 26 de Abril del 2016</span>
-			  			</li>
-			            <li>|</li>
-			            	<span><i class="glyphicon glyphicon-tags"></i> 2 Entradas</span>
-			            <li>|</li>
-			            	<span><i class="glyphicon glyphicon-comment"></i> 12 Respuestas</span>
-			            <li>|</li>
-			            <li>
-			               	<span class="glyphicon glyphicon-star"></span>
-	                        <span class="glyphicon glyphicon-star"></span>
-	                        <span class="glyphicon glyphicon-star"></span>
-	                        <span class="glyphicon glyphicon-star"></span>
-	                        <span class="glyphicon glyphicon-star-empty"></span>
-			            </li>
-			            <li>|</li>
-			            <li>
-			            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
-			              <span><i class="fa fa-facebook-square"></i></span>
-			              <span><i class="fa fa-twitter-square"></i></span>
-			              <span><i class="fa fa-google-plus-square"></i></span>
-			            </li>
-					</ul>
-		       	</div>
-		    </div>
-		</div>
+
+<div class="btn-toolbar" aria-label="Toolbar with button groups" role="toolbar">
+	<div class="btn-group" aria-label="First group" role="group">
+		{% for foro in grupoForo %}
+			<button class="btn btn-default getForo" type="button" data-id="{{ foro.id }}">{{ foro.nombre }}</button>
+		{% endfor %}	
 	</div>
 </div>
+</br>
+
+<div id="foro">
+</div>
+
+{% block javascripts -%}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".getForo").click(function (e) {
+
+                var foroId = $(this).data('id');
+                var url = Routing.generate('traer_foro', { id: foroId });
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(response) {
+                       $('#foro').html(response);
+                    }
+                });
+
+            });
+        });
+    </script>
+
+{% endblock %}
+
+

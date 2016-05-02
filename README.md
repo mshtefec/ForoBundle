@@ -39,7 +39,7 @@ Add it to the `AppKernel.php` class:
 
 ```php
 // ...
-new MWSimple\Bundle\ForoBundle\ForoBundle(),
+new MWSimple\Bundle\ForoBundle\MWSimpleForoBundle(),
 ```
 
 ## Configure Entities

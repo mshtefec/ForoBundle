@@ -36,8 +36,8 @@ class Grupo
     private $miembros;
 
     /**
-     * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada", mappedBy="grupo_id")
-     * @ORM\JoinTable(name="entradas")
+     * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada", mappedBy="grupo")
+     * @ORM\JoinTable(name="mws_entrada")
      */
     private $entradas;
 
@@ -122,35 +122,35 @@ class Grupo
     }
 
     /**
-     * Add entrada
+     * Add entradas
      *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entradas
      * @return entrada
      */
-    public function addEntradas(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada)
+    public function addEntradas(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entradas)
     {
-        $this->entrada[] = $entrada;
+        $this->entradas[] = $entradas;
 
         return $this;
     }
 
     /**
-     * Remove entrada
+     * Remove entradas
      *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
+     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entradas
      */
-    public function removeEntradas(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada)
+    public function removeEntradas(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entradas)
     {
-        $this->entrada->removeElement($entrada);
+        $this->entradas->removeElement($entradas);
     }
 
     /**
-     * Get entrada
+     * Get entradas
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getEntradas()
     {
-        return $this->entrada;
+        return $this->entradas;
     }
 }

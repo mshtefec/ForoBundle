@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormError;
  * UserFilterType filtro.
  * @author Nombre Apellido <name@gmail.com>
  */
-class UserFilterType extends AbstractType
+class UsuarioFilterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -53,7 +53,7 @@ class UserFilterType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MWSimple\Bundle\ForoBundle\Entity\User'
+            'data_class' => 'MWSimple\Bundle\ForoBundle\Entity\Usuario'
         ));
     }
 
@@ -62,6 +62,6 @@ class UserFilterType extends AbstractType
      */
     public function getName()
     {
-        return 'sistema_forobundle_userfiltertype';
+        return 'mws_forobundle_userfiltertype';
     }
 }

@@ -60,6 +60,6 @@ class GrupoType extends AbstractType
      */
     public function getName()
     {
-        return 'sistema_forobundle_grupo';
+        return 'mws_forobundle_grupo';
     }
 }

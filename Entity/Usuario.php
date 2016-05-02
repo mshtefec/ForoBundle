@@ -68,6 +68,11 @@ class Usuario
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->getUserId();
+    }
+
     /**
      * Set userId
      *

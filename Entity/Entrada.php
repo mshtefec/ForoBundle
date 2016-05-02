@@ -40,7 +40,7 @@ class Entrada
      *
      * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Grupo")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="grupo_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="grupo_Id", referencedColumnName="id")
      * })
      */
     private $grupo;
@@ -58,6 +58,11 @@ class Entrada
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitulo();
     }
 
     /**

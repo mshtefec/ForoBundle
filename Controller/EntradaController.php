@@ -178,7 +178,7 @@ class EntradaController extends Controller
     public function getAutocompleteGrupo()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:Grupo",
+            'repository' => "MWSimpleForoBundle:Grupo",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);
@@ -194,7 +194,7 @@ class EntradaController extends Controller
     public function getAutocompleteRespuesta()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:Respuesta",
+            'repository' => "MWSimpleForoBundle:Respuesta",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);

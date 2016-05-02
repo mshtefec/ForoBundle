@@ -36,8 +36,12 @@ class Respuesta
     private $miembro;
 
     /**
-     * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada", mappedBy="grupo_id")
-     * @ORM\JoinTable(name="entrada")
+     * @var \MWSimple\Bundle\ForoBundle\Entity\Entrada
+     *
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="entrada_Id", referencedColumnName="id")
+     * })
      */
     private $entrada;
 
@@ -51,12 +55,9 @@ class Respuesta
         return $this->id;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function __toString()
     {
-        $this->entrada = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->getId();
     }
 
     /**
@@ -106,32 +107,22 @@ class Respuesta
     }
 
     /**
-     * Add entrada
+     * Set entrada
      *
      * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
      * @return Respuesta
      */
-    public function addEntrada(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada)
+    public function setEntrada(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada = null)
     {
-        $this->entrada[] = $entrada;
+        $this->entrada = $entrada;
 
         return $this;
     }
 
     /**
-     * Remove entrada
-     *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada
-     */
-    public function removeEntrada(\MWSimple\Bundle\ForoBundle\Entity\Entrada $entrada)
-    {
-        $this->entrada->removeElement($entrada);
-    }
-
-    /**
      * Get entrada
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \MWSimple\Bundle\ForoBundle\Entity\Entrada 
      */
     public function getEntrada()
     {
