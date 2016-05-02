@@ -31,6 +31,7 @@ class RespuestaType extends AbstractType
                     'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
                 )
             ))
+            /*
             ->add('entrada', 'select2', array(
                 'class' => 'MWSimple\Bundle\ForoBundle\Entity\Entrada',
                 'url'   => 'Respuesta_autocomplete_entrada',
@@ -41,7 +42,7 @@ class RespuestaType extends AbstractType
                 'attr' => array(
                     'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
                 )
-            ))
+            ))*/
         ;
     }
     

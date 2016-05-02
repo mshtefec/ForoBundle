@@ -8,23 +8,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
-use MWSimple\Bundle\ForoBundle\Entity\User;
-use MWSimple\Bundle\ForoBundle\Form\UserType;
-use MWSimple\Bundle\ForoBundle\Form\UserFilterType;
+use MWSimple\Bundle\ForoBundle\Entity\Usuario;
+use MWSimple\Bundle\ForoBundle\Form\UsuarioType;
+use MWSimple\Bundle\ForoBundle\Form\UsuarioFilterType;
 
 /**
- * User controller.
+ * Usuario controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/forouser")
+ * @Route("/forousuario")
  */
-class UserController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * Configuration file.
      */
     protected $config = array(
-        'yml' => '/../Resources/config/User.yml',
+        'yml' => '/../Resources/config/Usuario.yml',
     );
 
     protected function getConfig(){
@@ -43,7 +43,7 @@ class UserController extends Controller
     /**
      * Lists all User entities.
      *
-     * @Route("/", name="foro_user")
+     * @Route("/", name="foro_usuario")
      * @Method("GET")
      * @Template()
      */
@@ -58,9 +58,9 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
-     * @Route("/", name="foro_user_create")
+     * @Route("/", name="foro_usuario_create")
      * @Method("POST")
-     * @Template("SistemaForoBundle:User:new.html.twig")
+     * @Template("SistemaForoBundle:Usuario:new.html.twig")
      */
     public function createAction()
     {
@@ -73,7 +73,7 @@ class UserController extends Controller
     /**
      * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="foro_user_new")
+     * @Route("/new", name="foro_usuario_new")
      * @Method("GET")
      * @Template()
      */
@@ -88,7 +88,7 @@ class UserController extends Controller
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/{id}", name="foro_user_show")
+     * @Route("/{id}", name="foro_usuario_show")
      * @Method("GET")
      * @Template()
      */
@@ -102,7 +102,7 @@ class UserController extends Controller
     /**
      * Displays a form to edit an existing User entity.
      *
-     * @Route("/{id}/edit", name="foro_user_edit")
+     * @Route("/{id}/edit", name="foro_usuario_edit")
      * @Method("GET")
      * @Template()
      */
@@ -117,9 +117,9 @@ class UserController extends Controller
     /**
      * Edits an existing User entity.
      *
-     * @Route("/{id}", name="foro_user_update")
+     * @Route("/{id}", name="foro_usuario_update")
      * @Method("PUT")
-     * @Template("SistemaForoBundle:User:edit.html.twig")
+     * @Template("MWSimpleForoBundle:Usuario:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -132,7 +132,7 @@ class UserController extends Controller
     /**
      * Deletes a User entity.
      *
-     * @Route("/{id}", name="foro_user_delete")
+     * @Route("/{id}", name="foro_usuario_delete")
      * @Method("DELETE")
      */
     public function deleteAction($id)
@@ -145,7 +145,7 @@ class UserController extends Controller
     /**
      * Exporter User.
      *
-     * @Route("/exporter/{format}", name="foro_user_export")
+     * @Route("/exporter/{format}", name="foro_usuario_export")
      */
     public function getExporter($format)
     {
@@ -162,7 +162,7 @@ class UserController extends Controller
     public function getAutocompleteEntrada()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:Entrada",
+            'repository' => "MWSimpleForoBundle:Entrada",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);
@@ -178,7 +178,7 @@ class UserController extends Controller
     public function getAutocompleteGrupo()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:Grupo",
+            'repository' => "MWSimpleForoBundle:Grupo",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);
@@ -194,7 +194,7 @@ class UserController extends Controller
     public function getAutocompleteRespuesta()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:Respuesta",
+            'repository' => "MWSimpleForoBundle:Respuesta",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);

@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * UserType form.
  * @author Nombre Apellido <name@gmail.com>
  */
-class UserType extends AbstractType
+class UsuarioType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -62,7 +62,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MWSimple\Bundle\ForoBundle\Entity\User'
+            'data_class' => 'MWSimple\Bundle\ForoBundle\Entity\Usuario'
         ));
     }
 
@@ -71,6 +71,6 @@ class UserType extends AbstractType
      */
     public function getName()
     {
-        return 'sistema_forobundle_user';
+        return 'mws_forobundle_usuario';
     }
 }

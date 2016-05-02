@@ -60,7 +60,7 @@ class RespuestaController extends Controller
      *
      * @Route("/", name="foro_respuesta_create")
      * @Method("POST")
-     * @Template("SistemaForoBundle:Respuesta:new.html.twig")
+     * @Template("MWSimpleForoBundle:Respuesta:new.html.twig")
      */
     public function createAction()
     {
@@ -119,7 +119,7 @@ class RespuestaController extends Controller
      *
      * @Route("/{id}", name="foro_respuesta_update")
      * @Method("PUT")
-     * @Template("SistemaForoBundle:Respuesta:edit.html.twig")
+     * @Template("MWSimpleForoBundle:Respuesta:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -162,7 +162,7 @@ class RespuestaController extends Controller
     public function getAutocompleteUser()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:User",
+            'repository' => "MWSimpleForoBundle:Usuario",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);
@@ -178,7 +178,7 @@ class RespuestaController extends Controller
     public function getAutocompleteEntrada()
     {
         $options = array(
-            'repository' => "SistemaForoBundle:Entrada",
+            'repository' => "MWSimpleForoBundle:Entrada",
             'field'      => "id",
         );
         $response = parent::getAutocompleteFormsMwsAction($options);

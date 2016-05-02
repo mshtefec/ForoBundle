@@ -43,17 +43,17 @@ class EntradaType extends AbstractType
                     'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
                 )
             ))
-            // ->add('respuestas', 'select2', array(
-            //     'class' => 'MWSimple\Bundle\ForoBundle\Entity\Respuesta',
-            //     'url'   => 'Entrada_autocomplete_respuestas',
-            //     'configs' => array(
-            //         'multiple' => true,//required true or false
-            //         'width'    => 'off',
-            //     ),
-            //     'attr' => array(
-            //         'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
-            //     )
-            // ))
+            ->add('respuestas', 'select2', array(
+                'class' => 'MWSimple\Bundle\ForoBundle\Entity\Respuesta',
+                'url'   => 'Entrada_autocomplete_respuestas',
+                'configs' => array(
+                    'multiple' => true,//required true or false
+                    'width'    => 'off',
+                ),
+                'attr' => array(
+                    'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
+                )
+            ))
         ;
     }
     
@@ -72,6 +72,6 @@ class EntradaType extends AbstractType
      */
     public function getName()
     {
-        return 'sistema_forobundle_entrada';
+        return 'mws_forobundle_entrada';
     }
 }
