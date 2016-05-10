@@ -3,6 +3,8 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -143,6 +145,21 @@ class GrupoController extends Controller
     }
 
     /**
+     * Lists all Users FOS entities.
+     *
+     * @Route("/usersfos", name="admin_grupo_foro_usersfos")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexUsersFosAction()
+    {
+        $this->config['filterType'] = new GrupoFilterType();
+        $response = parent::indexAction();
+
+        return $response;
+    }
+
+    /**
      * Exporter Grupo.
      *
      * @Route("/exporter/{format}", name="foro_grupo_export")
@@ -161,11 +178,23 @@ class GrupoController extends Controller
      */
     public function getAutocompleteUser()
     {
-        $options = array(
-            'repository' => "SistemaForoBundle:User",
-            'field'      => "id",
+        $request = $this->getRequest();
+        $term = $request->query->get('q', null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userManager = $this->get('fos_user.user_manager');
+        $entities = $userManager->findUserByUsernameOrEmail($term);
+
+        $array = array();
+
+        $array[] = array(
+            'id'   => $entities->getId(),
+            'text' => $entities->__toString(),
         );
-        $response = parent::getAutocompleteFormsMwsAction($options);
+
+        $response = new JsonResponse();
+        $response->setData($array);
 
         return $response;
     }

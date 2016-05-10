@@ -1,1 +1,37 @@
-{% extends 'MWSimpleAdminCrudBundle:Default:new.html.twig' %}
+{% extends 'MWSimpleAdminCrudBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+{% endblock %}
+
+{% block page %}
+    {% form_theme form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-primary center-block">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-plus"></i> {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                </div>
+                <div class="panel-body">
+                    {% block form %}
+                        {{ form(form) }}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% block buttonsbelow %}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <a class="form-control btn btn-info" href="{{ path(config.index) }}">
+                    {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                </a>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
+{% endblock %}

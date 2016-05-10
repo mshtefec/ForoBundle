@@ -4,6 +4,7 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\UsuarioRepository;
+use MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface;
 
 /**
  * User
@@ -22,12 +23,19 @@ class Usuario
      */
     private $id;
 
-    /**
+    /*
      * @var integer
      *
      * @ORM\Column(name="userId", type="integer")
-     */
+     *
     private $userId;
+    */
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface")
+     * @var InvoiceSubjectInterface
+     */
+    protected $userId;
 
     /**
      * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada", inversedBy="autor")
