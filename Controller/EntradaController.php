@@ -64,10 +64,99 @@ class EntradaController extends Controller
      */
     public function createAction()
     {
-        $this->config['newType'] = new EntradaType();
-        $response = parent::createAction();
+        $config = $this->getConfig();
+        $request = $this->getRequest();
+        $entity = new $config['entity']();
+        $form   = $this->createCreateForm($config, $entity);
+        $form->handleRequest($request);
 
-        return $response;
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->getUser();
+            $entity->setAutor($user);
+            $entity->setGrupo();
+            
+            $em->persist($entity);
+            $em->flush();
+            $this->useACL($entity, 'create');
+
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+            if (!array_key_exists('saveAndAdd', $config)) {
+                $config['saveAndAdd'] = true;
+            } elseif ($config['saveAndAdd'] != false) {
+                $config['saveAndAdd'] = true;
+            }
+
+            if ($config['saveAndAdd']) {
+                $nextAction = $form->get('saveAndAdd')->isClicked()
+                ? $this->generateUrl($config['new'])
+                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+            } else {
+                $nextAction = $this->generateUrl('foro_mws');
+            }
+
+            return $this->redirect($nextAction);
+        }
+
+        $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
+
+        // remove the form to return to the view
+        unset($config['newType']);
+
+        return array(
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
+    /**
+    * Creates a form to create a entity.
+    * @param array $config
+    * @param $entity The entity
+    * @return \Symfony\Component\Form\Form The form
+    */
+    protected function createCreateForm($config, $entity)
+    {
+        $form = $this->createForm($config['newType'], $entity, array(
+            'action' => $this->generateUrl($config['create']),
+            'method' => 'POST',
+        ));
+
+        $form
+            ->add('idForo', 'hidden')
+            ->add('save', 'submit', array(
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
+                'label'              => 'publicar',
+                'attr'               => array(
+                    'class' => 'form-control btn-success',
+                    'col'   => 'col-lg-2',
+                )
+            ))
+        ;
+
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
+
+        if ($config['saveAndAdd']) {
+            $form
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.new.saveAndAdd',
+                    'attr'               => array(
+                        'class' => 'form-control btn-primary',
+                        'col'   => 'col-lg-3',
+                    )
+                ))
+            ;
+        }
+
+        return $form;
     }
 
     /**

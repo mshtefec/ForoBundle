@@ -30,8 +30,8 @@ class Entrada
     private $titulo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Usuario", inversedBy="entrada")
-     * @ORM\JoinColumn(name="autor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface", inversedBy="entrada")
+     * @var InvoiceSubjectInterface
      */
     private $autor;
 

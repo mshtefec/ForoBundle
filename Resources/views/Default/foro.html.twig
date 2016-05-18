@@ -35,13 +35,24 @@
 	{% endfor %}
 
 	<div id="entrada"></div>
-	{# FIN ENTRADAS DEL GRUPO #}
-{# FIN TODOS LOS FOROS #}
+	{# FIN TODOS LOS FOROS #}
+
+	{% if is_granted('ROLE_ADMIN') %}
+			{# PANEL PUBLICA NUEVA RESPUESTA #}
+	      	<div id="accordionRespuesta" class="panel-group" aria-multiselectable="true" role="tablist">
+				<a class="collapsed btn btn-info" role="button" data-toggle="collapse" data-parent="#accordionRespuesta" href="#collapseResponse" aria-expanded="false" aria-controls="collapseResponse"> Nueva Entrada</a>
+				<div id="collapseResponse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+				    {{ render(controller('MWSimpleForoBundle:Entrada:new')) }}
+				</div>
+			</div>
+
+	{% endif %}	
 
 {% block javascripts -%}
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".getEntrada").click(function (e) {
+        	
+        	$(".getEntrada").click(function (e) {
 
                 var entradaId = $(this).data('id');
                 var url = Routing.generate('traer_entrada', { id: entradaId });
@@ -53,7 +64,13 @@
                     }
                 });
 
-            });
+            })
+
+            $('#accordionRespuesta').click(function (e) {
+			  e.preventDefault()
+			  $(this).tab('show')
+			})
+
         });
     </script>
 

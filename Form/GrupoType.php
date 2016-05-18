@@ -12,6 +12,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class GrupoType extends AbstractType
 {
+    
+    private $subjectInterface;
+
+    public function __Construct($subjectInterface)
+    {
+        $this->subjectInterface = $subjectInterface;
+        //ladybug_dump_die($subjectInterface);
+    }
+        
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -21,7 +30,7 @@ class GrupoType extends AbstractType
         $builder
             ->add('nombre')
             ->add('miembros', 'select2', array(
-                'class' => 'MWSimple\Bundle\ForoBundle\Entity\Usuario',
+                'class' => $this->subjectInterface,
                 'url'   => 'Grupo_autocomplete_miembros',
                 'configs' => array(
                     'multiple' => true,//required true or false

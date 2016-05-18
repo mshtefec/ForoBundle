@@ -77,13 +77,7 @@
 		          	<div id="accordionRespuesta" class="panel-group" aria-multiselectable="true" role="tablist">
 						<a class="collapsed btn btn-info" role="button" data-toggle="collapse" data-parent="#accordionRespuesta" href="#collapseResponse" aria-expanded="false" aria-controls="collapseResponse"> Nueva Respuesta</a>
 						<div id="collapseResponse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-						    <div class="panel panel-default">
-						    	<div class="panel-body">
-						    		<h4>Nueva Respuesta de Fulanito</h4>
-						    		<p>aca va el textarea con tiny editor o simple</p>
-						    	</div>
-						    	<button class="btn btn-success pull-right" type="button">Publicar</button>
-						    </div>
+						    {{ render(controller('MWSimpleForoBundle:Respuesta:new')) }}
 						</div>
 					</div>
 

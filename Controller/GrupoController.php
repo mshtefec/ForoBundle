@@ -18,7 +18,7 @@ use MWSimple\Bundle\ForoBundle\Form\GrupoFilterType;
  * Grupo controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/admin/foro/grupo")
+ * @Route("/foro/grupo")
  */
 class GrupoController extends Controller
 {
@@ -28,6 +28,8 @@ class GrupoController extends Controller
     protected $config = array(
         'yml' => '/../Resources/config/Grupo.yml',
     );
+
+    protected $interfaceSubject = "";
 
     protected function getConfig(){
         $configs = Yaml::parse(file_get_contents(__DIR__ . $this->config['yml']));
@@ -66,7 +68,9 @@ class GrupoController extends Controller
      */
     public function createAction()
     {
-        $this->config['newType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+
+        $this->config['newType'] = new GrupoType($subject);
         $response = parent::createAction();
 
         return $response;
@@ -81,7 +85,9 @@ class GrupoController extends Controller
      */
     public function newAction()
     {
-        $this->config['newType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+        
+        $this->config['newType'] = new GrupoType($subject);
         $response = parent::newAction();
 
         return $response;
@@ -110,7 +116,9 @@ class GrupoController extends Controller
      */
     public function editAction($id)
     {
-        $this->config['editType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+
+        $this->config['editType'] = new GrupoType($subject);
         $response = parent::editAction($id);
 
         return $response;
@@ -125,7 +133,9 @@ class GrupoController extends Controller
      */
     public function updateAction($id)
     {
-        $this->config['editType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+
+        $this->config['editType'] = new GrupoType($subject);
         $response = parent::updateAction($id);
 
         return $response;
@@ -153,6 +163,8 @@ class GrupoController extends Controller
      */
     public function indexUsersFosAction()
     {
+        $subject = $this->container->getParameter('subjectInterface');
+        
         $this->config['filterType'] = new GrupoFilterType();
         $response = parent::indexAction();
 
