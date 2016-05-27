@@ -18,7 +18,6 @@ class GrupoType extends AbstractType
     public function __Construct($subjectInterface)
     {
         $this->subjectInterface = $subjectInterface;
-        //ladybug_dump_die($subjectInterface);
     }
         
     /**

@@ -31,7 +31,7 @@ class Grupo
     private $nombre;
 
     /**
-     * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface")
+     * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
      * @ORM\JoinTable(name="mws_grupo_userfos",
      *      joinColumns={@ORM\JoinColumn(name="mws_grupo", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="fos_user", referencedColumnName="id")}
@@ -41,7 +41,7 @@ class Grupo
     private $miembros;
 
     /**
-     * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface")
+     * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
      * @ORM\JoinTable(name="mws_grupo_userfos_editores",
      *      joinColumns={@ORM\JoinColumn(name="mws_grupo", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="fos_user", referencedColumnName="id", unique=true)}

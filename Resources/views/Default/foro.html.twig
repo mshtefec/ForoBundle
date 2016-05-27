@@ -39,16 +39,95 @@
 
 	{% if is_granted('ROLE_ADMIN') %}
 			{# PANEL PUBLICA NUEVA RESPUESTA #}
-	      	<div id="accordionRespuesta" class="panel-group" aria-multiselectable="true" role="tablist">
-				<a class="collapsed btn btn-info" role="button" data-toggle="collapse" data-parent="#accordionRespuesta" href="#collapseResponse" aria-expanded="false" aria-controls="collapseResponse"> Nueva Entrada</a>
-				<div id="collapseResponse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-				    {{ render(controller('MWSimpleForoBundle:Entrada:new')) }}
-				</div>
-			</div>
+	      	<!-- Button trigger modal -->
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#entradaModal">
+			  Nueva Entrada
+			</button>
+
+			{#
+			<div class="modal fade" id="entradaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-lg">
+			    	<div class="modal-content">
+			      		<div class="modal-header bg-success">
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        		<h4 class="modal-title">Nueva Entrada</h4>
+			      		</div>
+			      		<div class="modal-body">
+			      			<div id="wrapper">
+			      				
+			      				<div class="row">
+				                    <div class="col-md-12 col-sm-12">
+				                        {% for type, flashMessages in app.session.flashbag.all() %}
+				                            {% for flashMessage in flashMessages %}
+				                                <div class="alert alert-{{ type }}">
+				                                    {{ flashMessage|trans({}, 'MWSimpleAdminCrudBundle') }}
+				                                </div>
+				                            {% endfor %}
+				                        {% endfor %}
+				                    </div>
+				                </div>
+
+				        		<div class="row">
+					                <div class="col-md-12 col-sm-12">
+				                        {% form_theme form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
+			                            <div class="row">
+			                                <div class="col-lg-12 col-md-12 col-sm-12">
+			                                    <div class="panel panel-default center-block">
+			                                        <div class="panel-body">
+			                                            {{ form(form) }}    
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div> 
+					                </div>
+					            </div>
+
+				        	</div>
+			      		</div>
+					    <div class="modal-footer">
+					    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					    </div>
+			    	</div><!-- /.modal-content -->
+			  	</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			#}
+			<div id="wrapper">
+			    			
+  				<div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        {% for type, flashMessages in app.session.flashbag.all() %}
+                            {% for flashMessage in flashMessages %}
+                                <div class="alert alert-{{ type }}">
+                                    {{ flashMessage|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+        		<div class="row">
+	                <div class="col-md-12 col-sm-12">
+                        {% form_theme form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="panel panel-default center-block">
+                                    <div class="panel-body">
+                                        {{ form(form) }}    
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+	                </div>
+	            </div>
+
+        	</div>
 
 	{% endif %}	
 
 {% block javascripts -%}
+	<script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
+	<script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/bootstrapValidator.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/language/es_ES.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
         	
@@ -69,6 +148,10 @@
             $('#accordionRespuesta').click(function (e) {
 			  e.preventDefault()
 			  $(this).tab('show')
+			})
+
+			$('#entradaModal').on('shown.bs.modal', function () {
+			  $('#myInput').focus()
 			})
 
         });

@@ -2,8 +2,7 @@
 
 namespace MWSimple\Bundle\ForoBundle\Model;
 
-interface InvoiceSubjectInterface
-{
+interface FosUserSubjectInterface {
 
     /**
      * @return string

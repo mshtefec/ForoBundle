@@ -12,6 +12,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class EntradaType extends AbstractType
 {
+
+    private $idForo;
+
+    public function __construct($idForo)
+    {
+        $this->idForo = $idForo;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -20,6 +28,10 @@ class EntradaType extends AbstractType
     {
         $builder
             ->add('titulo')
+            ->add('idForo', 'hidden', array(
+                'mapped' => false,
+                'data'   => $this->idForo,
+            ))
             // ->add('autor', 'select2', array(
             //     'class' => 'MWSimple\Bundle\ForoBundle\Entity\Usuario',
             //     'url'   => 'Entrada_autocomplete_autor',

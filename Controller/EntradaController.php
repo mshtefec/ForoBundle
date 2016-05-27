@@ -60,11 +60,12 @@ class EntradaController extends Controller
      *
      * @Route("/", name="foro_entrada_create")
      * @Method("POST")
-     * @Template("SistemaForoBundle:Entrada:new.html.twig")
+     * @Template("MWSimpleForoBundle:Entrada:new.html.twig")
      */
     public function createAction()
     {
         $config = $this->getConfig();
+        $this->configEntrada['newType'] = new EntradaType($id = null);
         $request = $this->getRequest();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
@@ -73,6 +74,8 @@ class EntradaController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            $idForo = $form->get('idForo')->getData();
+  
             $user = $this->getUser();
             $entity->setAutor($user);
             $entity->setGrupo();
@@ -110,53 +113,6 @@ class EntradaController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         );
-    }
-
-    /**
-    * Creates a form to create a entity.
-    * @param array $config
-    * @param $entity The entity
-    * @return \Symfony\Component\Form\Form The form
-    */
-    protected function createCreateForm($config, $entity)
-    {
-        $form = $this->createForm($config['newType'], $entity, array(
-            'action' => $this->generateUrl($config['create']),
-            'method' => 'POST',
-        ));
-
-        $form
-            ->add('idForo', 'hidden')
-            ->add('save', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'publicar',
-                'attr'               => array(
-                    'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
-                )
-            ))
-        ;
-
-        if (!array_key_exists('saveAndAdd', $config)) {
-            $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] != false) {
-            $config['saveAndAdd'] = true;
-        }
-
-        if ($config['saveAndAdd']) {
-            $form
-                ->add('saveAndAdd', 'submit', array(
-                    'translation_domain' => 'MWSimpleAdminCrudBundle',
-                    'label'              => 'views.new.saveAndAdd',
-                    'attr'               => array(
-                        'class' => 'form-control btn-primary',
-                        'col'   => 'col-lg-3',
-                    )
-                ))
-            ;
-        }
-
-        return $form;
     }
 
     /**
@@ -208,7 +164,7 @@ class EntradaController extends Controller
      *
      * @Route("/{id}", name="foro_entrada_update")
      * @Method("PUT")
-     * @Template("SistemaForoBundle:Entrada:edit.html.twig")
+     * @Template("MWSimpleForoBundle:Entrada:edit.html.twig")
      */
     public function updateAction($id)
     {

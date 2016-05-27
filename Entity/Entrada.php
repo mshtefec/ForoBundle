@@ -30,8 +30,8 @@ class Entrada
     private $titulo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface", inversedBy="entrada")
-     * @var InvoiceSubjectInterface
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface", inversedBy="entrada")
+     * @var FosUserSubjectInterface
      */
     private $autor;
 
