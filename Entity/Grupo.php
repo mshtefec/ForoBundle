@@ -4,6 +4,7 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\GrupoRepository;
+use MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface;
 
 /**
  * Grupo
@@ -30,10 +31,24 @@ class Grupo
     private $nombre;
 
     /**
-     * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Usuario", mappedBy="grupoId")
-     * @ORM\JoinTable(name="miembros")
+     * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
+     * @ORM\JoinTable(name="mws_grupo_userfos",
+     *      joinColumns={@ORM\JoinColumn(name="mws_grupo", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="fos_user", referencedColumnName="id")}
+     *      )
+     *
      */
     private $miembros;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
+     * @ORM\JoinTable(name="mws_grupo_userfos_editores",
+     *      joinColumns={@ORM\JoinColumn(name="mws_grupo", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="fos_user", referencedColumnName="id", unique=true)}
+     *      )
+     *
+     */
+    private $editores;
 
     /**
      * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada", mappedBy="grupo")
@@ -91,10 +106,10 @@ class Grupo
     /**
      * Add miembros
      *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Usuario $miembros
+     * @param \MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros
      * @return usuario
      */
-    public function addMiembro(\MWSimple\Bundle\ForoBundle\Entity\Usuario $miembros)
+    public function addMiembro(\MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros)
     {
         $this->miembros[] = $miembros;
 
@@ -104,9 +119,9 @@ class Grupo
     /**
      * Remove miembros
      *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Usuario $miembros
+     * @param \MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros
      */
-    public function removeMiembro(\MWSimple\Bundle\ForoBundle\Entity\Usuario $miembros)
+    public function removeMiembro(\MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros)
     {
         $this->miembros->removeElement($miembros);
     }

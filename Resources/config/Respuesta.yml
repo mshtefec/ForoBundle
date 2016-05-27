@@ -10,7 +10,7 @@ update: 'foro_respuesta_update'
 delete: 'foro_respuesta_delete'
 export: 'foro_respuesta_export'
 sessionFilter: 'RespuestaControllerFilter'
-saveAndAdd: true
+saveAndAdd: false
 fieldsindex:
     a.id:
         label: 'Id'

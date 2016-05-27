@@ -30,7 +30,7 @@ class Respuesta
     private $contenido;
 
     /**
-     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Usuario", inversedBy="respuesta")
+     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface", inversedBy="respuesta")
      * @ORM\JoinColumn(name="miembro_id", referencedColumnName="id")
      */
     private $miembro;

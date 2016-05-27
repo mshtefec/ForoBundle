@@ -5,6 +5,9 @@
 		{% for foro in grupoForo %}
 			<button class="btn btn-default getForo" type="button" data-id="{{ foro.id }}">{{ foro.nombre }}</button>
 		{% endfor %}	
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-success" role="button" href="{{ path('foro_grupo_new') }}" aria-expanded="false" aria-controls="collapseResponse"> Nuevo Foro</a>
+        {% endif %}
 	</div>
 </div>
 </br>

@@ -3,6 +3,8 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,7 +18,7 @@ use MWSimple\Bundle\ForoBundle\Form\GrupoFilterType;
  * Grupo controller.
  * @author Nombre Apellido <name@gmail.com>
  *
- * @Route("/admin/foro/grupo")
+ * @Route("/foro/grupo")
  */
 class GrupoController extends Controller
 {
@@ -26,6 +28,8 @@ class GrupoController extends Controller
     protected $config = array(
         'yml' => '/../Resources/config/Grupo.yml',
     );
+
+    protected $interfaceSubject = "";
 
     protected function getConfig(){
         $configs = Yaml::parse(file_get_contents(__DIR__ . $this->config['yml']));
@@ -64,7 +68,9 @@ class GrupoController extends Controller
      */
     public function createAction()
     {
-        $this->config['newType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+
+        $this->config['newType'] = new GrupoType($subject);
         $response = parent::createAction();
 
         return $response;
@@ -79,7 +85,9 @@ class GrupoController extends Controller
      */
     public function newAction()
     {
-        $this->config['newType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+        
+        $this->config['newType'] = new GrupoType($subject);
         $response = parent::newAction();
 
         return $response;
@@ -108,7 +116,9 @@ class GrupoController extends Controller
      */
     public function editAction($id)
     {
-        $this->config['editType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+
+        $this->config['editType'] = new GrupoType($subject);
         $response = parent::editAction($id);
 
         return $response;
@@ -123,7 +133,9 @@ class GrupoController extends Controller
      */
     public function updateAction($id)
     {
-        $this->config['editType'] = new GrupoType();
+        $subject = $this->container->getParameter('subjectInterface');
+
+        $this->config['editType'] = new GrupoType($subject);
         $response = parent::updateAction($id);
 
         return $response;
@@ -138,6 +150,23 @@ class GrupoController extends Controller
     public function deleteAction($id)
     {
         $response = parent::deleteAction($id);
+
+        return $response;
+    }
+
+    /**
+     * Lists all Users FOS entities.
+     *
+     * @Route("/usersfos", name="admin_grupo_foro_usersfos")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexUsersFosAction()
+    {
+        $subject = $this->container->getParameter('subjectInterface');
+        
+        $this->config['filterType'] = new GrupoFilterType();
+        $response = parent::indexAction();
 
         return $response;
     }
@@ -161,11 +190,23 @@ class GrupoController extends Controller
      */
     public function getAutocompleteUser()
     {
-        $options = array(
-            'repository' => "SistemaForoBundle:User",
-            'field'      => "id",
+        $request = $this->getRequest();
+        $term = $request->query->get('q', null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userManager = $this->get('fos_user.user_manager');
+        $entities = $userManager->findUserByUsernameOrEmail($term);
+
+        $array = array();
+
+        $array[] = array(
+            'id'   => $entities->getId(),
+            'text' => $entities->__toString(),
         );
-        $response = parent::getAutocompleteFormsMwsAction($options);
+
+        $response = new JsonResponse();
+        $response->setData($array);
 
         return $response;
     }

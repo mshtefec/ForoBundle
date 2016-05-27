@@ -60,14 +60,59 @@ class EntradaController extends Controller
      *
      * @Route("/", name="foro_entrada_create")
      * @Method("POST")
-     * @Template("SistemaForoBundle:Entrada:new.html.twig")
+     * @Template("MWSimpleForoBundle:Entrada:new.html.twig")
      */
     public function createAction()
     {
-        $this->config['newType'] = new EntradaType();
-        $response = parent::createAction();
+        $config = $this->getConfig();
+        $this->configEntrada['newType'] = new EntradaType($id = null);
+        $request = $this->getRequest();
+        $entity = new $config['entity']();
+        $form   = $this->createCreateForm($config, $entity);
+        $form->handleRequest($request);
 
-        return $response;
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $idForo = $form->get('idForo')->getData();
+  
+            $user = $this->getUser();
+            $entity->setAutor($user);
+            $entity->setGrupo();
+            
+            $em->persist($entity);
+            $em->flush();
+            $this->useACL($entity, 'create');
+
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+            if (!array_key_exists('saveAndAdd', $config)) {
+                $config['saveAndAdd'] = true;
+            } elseif ($config['saveAndAdd'] != false) {
+                $config['saveAndAdd'] = true;
+            }
+
+            if ($config['saveAndAdd']) {
+                $nextAction = $form->get('saveAndAdd')->isClicked()
+                ? $this->generateUrl($config['new'])
+                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+            } else {
+                $nextAction = $this->generateUrl('foro_mws');
+            }
+
+            return $this->redirect($nextAction);
+        }
+
+        $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
+
+        // remove the form to return to the view
+        unset($config['newType']);
+
+        return array(
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
     }
 
     /**
@@ -119,7 +164,7 @@ class EntradaController extends Controller
      *
      * @Route("/{id}", name="foro_entrada_update")
      * @Method("PUT")
-     * @Template("SistemaForoBundle:Entrada:edit.html.twig")
+     * @Template("MWSimpleForoBundle:Entrada:edit.html.twig")
      */
     public function updateAction($id)
     {
