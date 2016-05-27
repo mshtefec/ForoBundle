@@ -4,7 +4,7 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\GrupoRepository;
-use MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface;
+use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
 
 /**
  * Grupo
@@ -44,7 +44,7 @@ class Grupo
      * @ORM\ManyToMany(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
      * @ORM\JoinTable(name="mws_grupo_userfos_editores",
      *      joinColumns={@ORM\JoinColumn(name="mws_grupo", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="fos_user", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="fos_user", referencedColumnName="id")}
      *      )
      *
      */
@@ -77,6 +77,7 @@ class Grupo
     public function __construct()
     {
         $this->miembros = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editores = new \Doctrine\Common\Collections\ArrayCollection();
         $this->entrada = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -106,10 +107,10 @@ class Grupo
     /**
      * Add miembros
      *
-     * @param \MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros
+     * @param \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $miembros
      * @return usuario
      */
-    public function addMiembro(\MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros)
+    public function addMiembro(\MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $miembros)
     {
         $this->miembros[] = $miembros;
 
@@ -119,9 +120,9 @@ class Grupo
     /**
      * Remove miembros
      *
-     * @param \MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros
+     * @param \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $miembros
      */
-    public function removeMiembro(\MWSimple\Bundle\ForoBundle\Model\InvoiceSubjectInterface $miembros)
+    public function removeMiembro(\MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $miembros)
     {
         $this->miembros->removeElement($miembros);
     }
@@ -134,6 +135,39 @@ class Grupo
     public function getMiembros()
     {
         return $this->miembros;
+    }
+
+    /**
+     * Add editores
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $editores
+     * @return usuario
+     */
+    public function addEditor(\MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $editores)
+    {
+        $this->editores[] = $editores;
+
+        return $this;
+    }
+
+    /**
+     * Remove editores
+     *
+     * @param \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $editores
+     */
+    public function removeEditor(\MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $editores)
+    {
+        $this->editores->removeElement($editores);
+    }
+
+    /**
+     * Get editores
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditores()
+    {
+        return $this->editores;
     }
 
     /**

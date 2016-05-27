@@ -125,12 +125,9 @@ class DefaultController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            ladybug_dump_die("Hola");
-            
-            /*
             $user = $this->getUser();
             $entity->setAutor($user);
-            $entity->setGrupo();
+            $entity->setGrupo($foro);
             
             $em->persist($entity);
             $em->flush();
@@ -144,7 +141,7 @@ class DefaultController extends Controller
             //$nextAction = $this->generateUrl('mws_front_foro');
 
             return $this->redirect($nextAction);
-            */
+            
         }
 
         //$this->entradaCrear();

@@ -4,6 +4,7 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\RespuestaRepository;
+use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
 
 /**
  * Respuesta
@@ -30,7 +31,7 @@ class Respuesta
     private $contenido;
 
     /**
-     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface", inversedBy="respuesta")
+     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
      * @ORM\JoinColumn(name="miembro_id", referencedColumnName="id")
      */
     private $miembro;
@@ -38,7 +39,7 @@ class Respuesta
     /**
      * @var \MWSimple\Bundle\ForoBundle\Entity\Entrada
      *
-     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada")
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Entrada", inversedBy="respuestas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="entrada_Id", referencedColumnName="id")
      * })
@@ -86,10 +87,10 @@ class Respuesta
     /**
      * Set miembro
      *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Usuario $miembro
+     * @param \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $miembro
      * @return Respuesta
      */
-    public function setMiembro(\MWSimple\Bundle\ForoBundle\Entity\Usuario $miembro = null)
+    public function setMiembro(\MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $miembro = null)
     {
         $this->miembro = $miembro;
 
@@ -99,7 +100,7 @@ class Respuesta
     /**
      * Get miembro
      *
-     * @return \MWSimple\Bundle\ForoBundle\Entity\Usuario 
+     * @return \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface 
      */
     public function getMiembro()
     {

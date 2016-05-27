@@ -4,6 +4,7 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\EntradaRepository;
+use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
 
 /**
  * Entrada
@@ -30,7 +31,7 @@ class Entrada
     private $titulo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface", inversedBy="entrada")
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
      * @var FosUserSubjectInterface
      */
     private $autor;
@@ -38,7 +39,7 @@ class Entrada
     /**
      * @var \MWSimple\Bundle\ForoBundle\Entity\Grupo
      *
-     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Grupo")
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Grupo", inversedBy="entradas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="grupo_Id", referencedColumnName="id")
      * })
@@ -99,10 +100,10 @@ class Entrada
     /**
      * Set autor
      *
-     * @param \MWSimple\Bundle\ForoBundle\Entity\Usuario $autor
+     * @param \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $autor
      * @return Entrada
      */
-    public function setAutor(\MWSimple\Bundle\ForoBundle\Entity\Usuario $autor = null)
+    public function setAutor(\MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface $autor = null)
     {
         $this->autor = $autor;
 
@@ -112,7 +113,7 @@ class Entrada
     /**
      * Get autor
      *
-     * @return \MWSimple\Bundle\ForoBundle\Entity\Usuario 
+     * @return \MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface 
      */
     public function getAutor()
     {

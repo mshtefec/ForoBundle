@@ -67,7 +67,7 @@ class User extends BaseUser implements FosUserSubjectInterface  {
 }
 ```
 
-## Configure Config yml
+## Configure your config.yml
 ```yaml
 
 imports:
