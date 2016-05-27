@@ -97,7 +97,8 @@ doctrine:
     ...
 ```
 
-## Configure Routing yml
+## Configure your own routings with the forobundle dynamically for yours own purposes in routing.yml
+#### EXAMPLES
 ```yaml
 
 # all routes from forobundle
@@ -113,7 +114,7 @@ front_foro:
         _controller: MWSimpleForoBundle:Default:index
         template:    index.html.twig
 
-# other route especific only for the foro groups create with security, show GrupoController Index
+# other route especific only for the foro groups create with security own, show GrupoController Index
 admin_foro_grupo:
     path: /admin/foro/grupo
     defaults:
@@ -122,4 +123,11 @@ admin_foro_grupo:
 
     ...
     ...
+```
+
+### Importing yours controllers RENDERS, example front_foro view
+#### in this case is the Front view of ForoBundle
+```twig
+    {# corresponds to the configurations in yours routing.yml #}
+    {{ render(url('front_foro')) }}
 ```
