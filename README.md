@@ -8,11 +8,7 @@
 
 ## Author
 
-Gonzalo Alonso - gonkpo@gmail.com
-
-## Collaborators
-
-Max Shtefec - max.shtefec@gmail.com
+TECSPRO - contacto@tecspro.com.ar
 
 ## Installation
 
