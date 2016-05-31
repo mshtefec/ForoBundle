@@ -1,0 +1,49 @@
+{# LISTA TODAS LAS ENTRADAS DEL GRUPO #}
+{% for entrada in entradas %}
+	<article class="entrada {{ cycle(['odd', 'even'], loop.index0) }}" id="entrada-{{ entrada.id }}">
+		<div class="row">
+		  	<div class="col-md-12 col-sm-12">
+				<div class="well">
+				    <div class="media">
+				      	<div class="media-body">
+				    		<h4 class="media-heading">{{ entrada.titulo }}</h4>
+							<ul class="list-inline list-unstyled">
+					  			<li>
+					  				<span><i class="glyphicon glyphicon-calendar"></i> 21 de Abril del 2016</span>
+					  			</li>
+					            <li>|</li>
+					            	<span><i class="glyphicon glyphicon-comment"></i> 2 Respuesta/s</span>
+					            <li>|</li>
+					            <li>
+					               	<span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star-empty"></span>
+					            </li>
+					            <li>|</li>
+					            <li>
+					            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+					              <span><i class="fa fa-facebook-square"></i></span>
+					              <span><i class="fa fa-twitter-square"></i></span>
+					              <span><i class="fa fa-google-plus-square"></i></span>
+					            </li>
+							</ul>
+							</br>
+				       	</div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</article>
+{% else %}
+	<p>Actualmente no existen Entradas para este Foro, Sea el primero en crear una...</p>
+{% endfor %}
+
+{% block javascripts -%}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+        });
+    </script>
+{% endblock %}

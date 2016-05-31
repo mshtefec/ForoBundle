@@ -2,7 +2,7 @@
 
 <div class="btn-toolbar" aria-label="Toolbar with button groups" role="toolbar">
 	<div class="btn-group" aria-label="First group" role="group">
-		{% for foro in grupoForo %}
+		{% for foro in foros %}
 			<button class="btn btn-default getForo" type="button" data-id="{{ foro.id }}">{{ foro.nombre }}</button>
 		{% endfor %}	
         {% if is_granted('ROLE_ADMIN') %}
@@ -15,6 +15,14 @@
 <div id="foro">
 </div>
 
+{% if foro %}
+    
+    {% include 'MWSimpleForoBundle:Default:foro.html.twig' with { 'foro': foro } %}  
+    {#
+    {{ render(controller( 'MWSimpleForoBundle:Default:foro', { 'foro_id': foro.id } )) }}
+    #}
+{% endif %}     
+
 {% block javascripts -%}
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
@@ -24,16 +32,31 @@
             $(".getForo").click(function (e) {
 
                 var foroId = $(this).data('id');
-                var url = Routing.generate('traer_foro', { id: foroId });
+                var url = Routing.generate('mws_front_foro', { foro_id: foroId });
                 $.ajax({
                     type: "GET",
                     url: url,
                     success: function(response) {
+                       //window.location = 'mws_front_foro/' + foroId;
                        $('#foro').html(response);
                     }
                 });
 
-            });
+            })
+
+            $(".getEntrada").click(function (e) {
+
+                var entradaId = $(this).data('id');
+                var url = Routing.generate('traer_entrada', { id: entradaId });
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(response) {
+                       $('#entrada').html(response);
+                    }
+                });
+
+            })
         });
     </script>
 
