@@ -69,27 +69,21 @@
 	{% endif %}	
 
 {% block javascripts -%}
-	
 	<script type="text/javascript">
-        $(document).ready(function () {
-        	
-        	$(".getEntrada").click(function (e) {
-
-                var entradaId = $(this).data('id');
-                var url = Routing.generate('traer_entrada', { id: entradaId });
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(response) {
-                       $('#entrada').html(response);
-                    }
-                });
-
+        $(document).ready(function () {       	
+        	$(".newEntrada").click(function (e) {
+        		// after click submit of new entrada, close modal and loading...
+        		$('#entradaModal').modal('hide');
+        		bloquearPantalla();
             })
-
-
         });
-    </script>
 
+        function bloquearPantalla() {
+            $.blockUI({
+                message: '<h1><img src="{{ asset('bundles/mwsimpleforo/gif/loading.gif') }}" /></h1> <p>Aguarde un momento...</p>',
+                onOverlayClick: $.unblockUI
+            });
+        }
+    </script>
 {% endblock %}
 

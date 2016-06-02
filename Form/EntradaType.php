@@ -12,15 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class EntradaType extends AbstractType
 {
-    /*
-    private $idForo;
-
-    public function __construct($idForo)
-    {
-        $this->idForo = $idForo;
-    }
-    */
-    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -28,7 +19,12 @@ class EntradaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo')
+            ->add('titulo', null, array(
+                'attr' => array(
+                    'class'       => "form-control",
+                    'placeholder' => "Welcome to the New Entry (example title)",
+                )
+            ))
             // ->add('idForo', 'hidden', array(
             //     'mapped' => false,
             //     'data'   => $this->idForo,

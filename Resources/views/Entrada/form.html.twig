@@ -1,6 +1,13 @@
 <form action="{{ path('foro_entrada_create', { 'foro_id' : entrada.grupo.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
     {{ form_widget(form) }}
+    <br>
     <p>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Públicar" class="btn btn-success newEntrada">
     </p>
 </form>
+
+{% block javascripts -%}
+	<script type="text/javascript">
+        
+    </script>
+{% endblock %}

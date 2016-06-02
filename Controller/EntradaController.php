@@ -52,20 +52,14 @@ class EntradaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /*
-            mws_front_foro
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
-                'id' => $entrada->getGrupo()->getId())) .
-                '#entrada-' . $entrada->getId()
-            );
-            */
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($entrada);
             $em->flush();
 
+            // Redirect 
             return $this->redirect($this->generateUrl('foro_mws', array(
-                'id' => $entrada->getGrupo()->getId())) .
+                'foro_id' => $entrada->getGrupo()->getId())) .
                 '#entrada-' . $entrada->getId()
             );
         }

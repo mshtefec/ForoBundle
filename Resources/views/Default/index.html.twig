@@ -6,60 +6,56 @@
 			<button class="btn btn-default getForo" type="button" data-id="{{ foro.id }}">{{ foro.nombre }}</button>
 		{% endfor %}	
         {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn btn-success" role="button" href="{{ path('foro_grupo_new') }}" aria-expanded="false" aria-controls="collapseResponse"> Nuevo Foro</a>
+            <a class="btn btn-success newForo" role="button" href="{{ path('foro_grupo_new') }}" aria-expanded="false" aria-controls="collapseResponse"> Nuevo Foro</a>
         {% endif %}
 	</div>
 </div>
 </br>
 
 <div id="foro">
+    {% if foro is not null %}
+        {% include 'MWSimpleForoBundle:Default:foro.html.twig' with { 'foro': foro } %}
+    {% endif %}  
 </div>
 
-{% if foro %}
-    
-    {% include 'MWSimpleForoBundle:Default:foro.html.twig' with { 'foro': foro } %}  
-    {#
-    {{ render(controller( 'MWSimpleForoBundle:Default:foro', { 'foro_id': foro.id } )) }}
-    #}
-{% endif %}     
+   
+
 
 {% block javascripts -%}
+    <script src="{{ asset('bundles/mwsimpleforo/js/jquery.blockUI.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
+            
             $(".getForo").click(function (e) {
-
+                bloquearPantalla();
                 var foroId = $(this).data('id');
-                var url = Routing.generate('mws_front_foro', { foro_id: foroId });
+                var url = Routing.generate('traer_foro', { foro_id: foroId });
                 $.ajax({
                     type: "GET",
                     url: url,
                     success: function(response) {
-                       //window.location = 'mws_front_foro/' + foroId;
                        $('#foro').html(response);
+                       $.unblockUI();
                     }
                 });
 
             })
 
-            $(".getEntrada").click(function (e) {
-
-                var entradaId = $(this).data('id');
-                var url = Routing.generate('traer_entrada', { id: entradaId });
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(response) {
-                       $('#entrada').html(response);
-                    }
-                });
-
+            $(".newForo").click(function (e) {
+                bloquearPantalla();
             })
+
+            function bloquearPantalla() {
+                $.blockUI({
+                    message: '<h1><img src="{{ asset('bundles/mwsimpleforo/gif/loading.gif') }}" /></h1> <p>Aguarde un momento...</p>',
+                    onOverlayClick: $.unblockUI
+                });
+            }
         });
     </script>
-
 {% endblock %}
 
 

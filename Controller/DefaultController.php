@@ -30,22 +30,25 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	
         $foros = $em->getRepository('MWSimpleForoBundle:Grupo')->findAll();
+        $foro = null;
+        $entradas = null;
+    
+        if (!is_null($foro_id) && $foro_id <> 0) {
+            $foro = $em->getRepository('MWSimpleForoBundle:Grupo')->find($foro_id);
+            $entradas = $em->getRepository('MWSimpleForoBundle:Entrada')->getEntradasForo($foro_id);    
+        }
         
-        $foro = $em->getRepository('MWSimpleForoBundle:Grupo')->find($foro_id);
-        $entradas = $em->getRepository('MWSimpleForoBundle:Entrada')->getEntradasForo($foro_id);
-
         return $this->render('MWSimpleForoBundle:Default:index.html.twig', array(
-        	'foros'	=> $foros,
-            'foro'      => $foro,
+        	'foros'	   => $foros,
+            'foro'     => $foro,
             'entradas' => $entradas,
-            'foro_id'      => $foro_id,
 		));
     }
 
     /**
      * Finds and displays a Foro entity.
      *
-     * @Route("/{foro_id}", name="traer_foro", options={"expose"=true})
+     * @Route("/id/{foro_id}", name="traer_foro", options={"expose"=true})
      * @Method("GET")
      */
     public function foroAction(Request $request, $foro_id) {
