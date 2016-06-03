@@ -31,8 +31,8 @@ class Respuesta
     private $contenido;
 
     /**
-     * @ORM\OneToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
-     * @ORM\JoinColumn(name="miembro_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface")
+     * @var FosUserSubjectInterface
      */
     private $miembro;
 

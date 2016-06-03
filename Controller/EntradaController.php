@@ -23,9 +23,10 @@ class EntradaController extends Controller
 
     public function newAction($foro_id) {
         $grupo = $this->getGrupo($foro_id);
-
+        $usuario = $this->get('security.context')->getToken()->getUser();
         $entrada = new Entrada();
         $entrada->setGrupo($grupo);
+        $entrada->setAutor($usuario);
         $form   = $this->createForm(new EntradaType(), $entrada);
 
         return $this->render('MWSimpleForoBundle:Entrada:form.html.twig', array(
@@ -35,18 +36,19 @@ class EntradaController extends Controller
     }
 
     /**
-     * Creates a new Respuesta entity.
+     * Creates a new Entrada entity.
      *
      * @Route("/{foro_id}", name="foro_entrada_create")
      * @Method("POST")
-     * @Template("MWSimpleForoBundle:Respuesta:create.html.twig")
+     * @Template("MWSimpleForoBundle:Entrada:create.html.twig")
      */
     public function createAction($foro_id)
     {
         $grupo = $this->getGrupo($foro_id);
-
+        $usuario = $this->get('security.context')->getToken()->getUser();
         $entrada  = new Entrada();
         $entrada->setGrupo($grupo);
+        $entrada->setAutor($usuario);
         $request = $this->getRequest();
         $form    = $this->createForm(new EntradaType(), $entrada);
         $form->handleRequest($request);

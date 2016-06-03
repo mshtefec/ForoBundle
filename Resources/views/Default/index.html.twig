@@ -41,13 +41,10 @@
                        $.unblockUI();
                     }
                 });
-
             })
-
             $(".newForo").click(function (e) {
                 bloquearPantalla();
             })
-
             function bloquearPantalla() {
                 $.blockUI({
                     message: '<h1><img src="{{ asset('bundles/mwsimpleforo/gif/loading.gif') }}" /></h1> <p>Aguarde un momento...</p>',
