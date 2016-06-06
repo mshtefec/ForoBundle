@@ -6,14 +6,6 @@
 - Pueden crear debates los editores del grupo y los miembros incluidos en el grupo.
 - Los editores o miembros del grupo pueden responder al debate.
 
-## Author
-
-Gonzalo Alonso - gonkpo@gmail.com
-
-## Collaborators
-
-Max Shtefec - max.shtefec@gmail.com
-
 ## Installation
 
 ### Using composer
@@ -52,7 +44,6 @@ use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
 ...
 class User extends BaseUser implements FosUserSubjectInterface  {
     ...
-    ...
     
     /**
      * @return string
@@ -61,8 +52,6 @@ class User extends BaseUser implements FosUserSubjectInterface  {
     {
         return $this->username;
     }
-
-    ...
     ...
 }
 ```
@@ -73,15 +62,11 @@ class User extends BaseUser implements FosUserSubjectInterface  {
 imports:
     # ForoBundle services
     - { resource: "@MWSimpleForoBundle/Resources/config/services.yml" }
-
-    ...
     ...
 
 parameters:
     # entity referenced to FosUserSubjectInterface
     subjectInterface: Sistema\UserBundle\Entity\User
-
-    ...
     ...
 
 # Doctrine Configuration
@@ -92,8 +77,6 @@ doctrine:
         resolve_target_entities:
             # configuration of the parameters attach fos
             MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface: "%subjectInterface%"
-
-    ...
     ...
 ```
 
@@ -120,8 +103,6 @@ admin_foro_grupo:
     defaults:
         _controller: MWSimpleForoBundle:Grupo:index
         template:    index.html.twig
-
-    ...
     ...
 ```
 
@@ -131,3 +112,7 @@ admin_foro_grupo:
     {# corresponds to the configurations in yours routing.yml #}
     {{ render(url('front_foro')) }}
 ```
+
+## Author
+
+TECSPRO - contacto@tecspro.com.ar
