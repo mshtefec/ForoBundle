@@ -1,0 +1,106 @@
+{% for entrada in entradas %}
+	<article class="entrada {{ cycle(['odd', 'even'], loop.index0) }}" id="entrada-{{ entrada.id }}">
+		<div class="row">
+		  	<div class="col-md-12 col-sm-12">
+				<div class="well" style="background-color: #ffffff">
+					{% if app.user == entrada.autor %}
+						<div align="right" style="margin-bottom: -25px; margin-top: -15px; margin-right: -15px;">
+		    				<a style="color: #5F5F5F" class="deleteEntrada" role="button" data-id="{{ entrada.id }}"><i class="glyphicon glyphicon-remove btn-xs"></i></a>
+		    			</div>
+		    		{% endif %}	
+
+				    <div class="media">
+				      	<div class="media-body">
+
+				    		<h4 class="media-heading">{{ entrada.titulo }}</h4>
+
+							<ul class="list-inline list-unstyled">
+					  			<li>
+					  				<span><i class="glyphicon glyphicon-calendar"></i> 21 de Abril del 2016</span>
+					  			</li>
+					            <li>|</li>
+					            	<span><i class="glyphicon glyphicon-comment"></i> {{ entrada.respuestas|length }} Respuesta/s</span>
+					            <li>|</li>
+					            <li>
+					               	<span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star"></span>
+			                        <span class="glyphicon glyphicon-star-empty"></span>
+					            </li>
+					            <li>|</li>
+					            <li>
+					            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+					              <span><i class="fa fa-facebook-square"></i></span>
+					              <span><i class="fa fa-twitter-square"></i></span>
+					              <span><i class="fa fa-google-plus-square"></i></span>
+					            </li>
+					            <a class="btn btn-warning btn-sm" role="button" data-toggle="collapse" href="#collapseRespuestas{{ entrada.id }}" aria-expanded="false" aria-controls="collapseRespuestas">
+									Ver Más ...
+								</a>
+
+							</ul>
+							<div class="collapse" id="collapseRespuestas{{ entrada.id }}">
+								{% include 'MWSimpleForoBundle:Default:respuestas.html.twig' with { 'respuestas': entrada.respuestas } %}
+								<hr style="border-width: 2px">
+								<a class="btn btn-warning" role="button" data-toggle="collapse" href="#collapseRespuesta{{ entrada.id }}" aria-expanded="false" aria-controls="collapseRespuesta">
+									Nueva Respuesta
+								</a>
+								<div class="collapse" id="collapseRespuesta{{ entrada.id }}">
+									<div class="well" style="background-color: #f5f5f5">
+								    	<div id="wrapper">			
+							  				<div class="row">
+							                    <div class="col-md-12 col-sm-12">
+							                        {% for type, flashMessages in app.session.flashbag.all() %}
+							                            {% for flashMessage in flashMessages %}
+							                                <div class="alert alert-{{ type }}">
+							                                    {{ flashMessage|trans({}, 'MWSimpleAdminCrudBundle') }}
+							                                </div>
+							                            {% endfor %}
+							                        {% endfor %}
+							                    </div>
+							                </div>
+							        		{{ render(controller( 'MWSimpleForoBundle:Respuesta:new', { 'entrada_id': entrada.id } )) }}
+							        	</div>
+								  	</div>
+								</div>
+							</div>	
+				       	</div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</article>
+{% else %}
+	<p>Actualmente no existen Entradas para este Foro, Sea el primero en crear una...</p>
+{% endfor %}
+
+{% block javascripts -%}
+    <script type="text/javascript">
+        $(document).ready(function () {       	
+        	$(".newRespuesta").click(function (e) {
+        		// after click submit of new entrada, close modal and loading...
+        		bloquearPantalla();
+            })
+        });
+        $(".deleteEntrada").click(function (e) {
+            bloquearPantalla();
+            var entradaId = $(this).data('id');
+            var url = Routing.generate('borrar_entrada', { entrada_id: entradaId });
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function(response) {
+                	window.location.reload();
+                	$.unblockUI();
+                }
+            });
+        })
+        function bloquearPantalla() {
+            $.blockUI({
+                message: '<h1><img src="{{ asset('bundles/mwsimpleforo/gif/loading.gif') }}" /></h1> <p>Aguarde un momento...</p>',
+                onOverlayClick: $.unblockUI
+            });
+        }
+    </script>
+{% endblock %}

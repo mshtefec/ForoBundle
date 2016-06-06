@@ -6,10 +6,6 @@
 - Pueden crear debates los editores del grupo y los miembros incluidos en el grupo.
 - Los editores o miembros del grupo pueden responder al debate.
 
-## Author
-
-TECSPRO - contacto@tecspro.com.ar
-
 ## Installation
 
 ### Using composer
@@ -40,98 +36,83 @@ new MWSimple\Bundle\ForoBundle\MWSimpleForoBundle(),
 
 ## Configure Entities
 
-#### Entrada Entity
+#### Implements Interface FosUserSubjectInterface in YOU UserFos Entity
 ```php
 ...
-use MWSimple\Bundle\ForoBundle\Entity\BaseEntrada;
+// DON'T forget this use statement!!!
+use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
 ...
-class Entrada extends BaseEntrada {
+class User extends BaseUser implements FosUserSubjectInterface  {
     ...
-    /**
-     * @ORM\OneToOne(targetEntity="FOS\UserBundle\Entity\User", inversedBy="username")
-     * @ORM\JoinColumn(name="autor_id", referencedColumnName="id")
-     */
-    private $autor;
     
     /**
-     * @var \MWSimple\ForoBundle\Entity\Grupo
-     *
-     * @ORM\ManyToOne(targetEntity="MWSimple\ForoBundle\Entity\Grupo")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="grupo_id", referencedColumnName="id")
-     * })
+     * @return string
      */
-    private $grupo;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MWSimple\ForoBundle\Entity\Respuesta", mappedBy="entrada")
-     */
-    private $respuestas;
-    ...
-}
-```
-#### Respuesta Entity
-```php
-...
-use MWSimple\Bundle\ForoBundle\Entity\BaseRespuesta;
-...
-class Respuesta extends BaseRespuesta {
-    ...
-    /**
-     * @ORM\OneToOne(targetEntity="FOS\UserBundle\Entity\User", inversedBy="username")
-     * @ORM\JoinColumn(name="miembro_id", referencedColumnName="id")
-     */
-    private $miembro;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MWSimple\ForoBundle\Entity\Entrada", mappedBy="grupo_id")
-     * @ORM\JoinTable(name="entrada")
-     */
-    private $entrada;
-    ...
-}
-```
-#### Grupo Entity
-```php
-...
-use MWSimple\Bundle\ForoBundle\Entity\BaseGrupo;
-...
-class Grupo extends BaseGrupo {
-    ...
-    /**
-     * @ORM\OneToMany(targetEntity="FOS\UserBundle\Entity\User", mappedBy="username")
-     * @ORM\JoinTable(name="miembro_editoruser")
-     */
-    private $miembros;
-
-    /**
-     * @ORM\OneToMany(targetEntity="MWSimple\ForoBundle\Entity\Entrada", mappedBy="grupo_id")
-     * @ORM\JoinTable(name="entrada")
-     */
-    private $entrada;
+    public function getName()
+    {
+        return $this->username;
+    }
     ...
 }
 ```
 
-## Configure Routing yml
-
-#### Entrada Entity
+## Configure your config.yml
 ```yaml
+
+imports:
+    # ForoBundle services
+    - { resource: "@MWSimpleForoBundle/Resources/config/services.yml" }
+    ...
+
+parameters:
+    # entity referenced to FosUserSubjectInterface
+    subjectInterface: Sistema\UserBundle\Entity\User
+    ...
+
+# Doctrine Configuration
+doctrine:
+    orm:
+        auto_mapping: true
+        # resolve_target attach to the subject entity for other thirds entities 
+        resolve_target_entities:
+            # configuration of the parameters attach fos
+            MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface: "%subjectInterface%"
+    ...
+```
+
+## Configure your own routings with the forobundle dynamically for yours own purposes in routing.yml
+#### EXAMPLES
+```yaml
+
+# all routes from forobundle
 mw_simple_front:
     resource: "@MWSimpleForoBundle/Controller/"
     type:     annotation
-    prefix:   /mwsadmin
+    prefix:   /foro
 
-mw_simple_front_foro:
-    resource: "@MWSimpleForoBundle/Controller/DefaultController.php"
-    type:     annotation
-    prefix:   /helloforo
-
-# Render Controller for example foro index
+# one route especific in this case DefaultController Index
 front_foro:
-    path: /mws/
+    path: /mws_front_foro/
     defaults:
         _controller: MWSimpleForoBundle:Default:index
         template:    index.html.twig
+
+# other route especific only for the foro groups create with security own, show GrupoController Index
+admin_foro_grupo:
+    path: /admin/foro/grupo
+    defaults:
+        _controller: MWSimpleForoBundle:Grupo:index
+        template:    index.html.twig
+    ...
 ```
-#
+
+### Importing yours controllers RENDERS, example front_foro view
+#### in this case is the Front view of ForoBundle
+```twig
+    {# corresponds to the configurations in yours routing.yml #}
+    {{ render(url('front_foro')) }}
+```
+
+## Author
+
+TECSPRO - contacto@tecspro.com.ar

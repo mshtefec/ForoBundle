@@ -1,0 +1,13 @@
+<form action="{{ path('foro_respuesta_create', { 'entrada_id' : entrada.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
+    {{ form_widget(form) }}
+    <br>
+    <p>
+        <input type="submit" value="Responder" class="btn btn-success newRespuesta">
+    </p>
+</form>
+
+{% block javascripts -%}
+	<script type="text/javascript">
+        
+    </script>
+{% endblock %}

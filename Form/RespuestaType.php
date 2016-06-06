@@ -19,7 +19,12 @@ class RespuestaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contenido')
+            ->add('contenido', 'textarea', array(
+                'attr' => array(
+                    'class'       => "form-control",
+                    'placeholder' => "Welcome to the New Response (example response)",
+                )
+            ))
             // ->add('miembro', 'select2', array(
             //     'class' => 'MWSimple\Bundle\ForoBundle\Entity\Usuario',
             //     'url'   => 'Respuesta_autocomplete_miembro',

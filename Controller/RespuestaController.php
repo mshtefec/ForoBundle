@@ -3,11 +3,12 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MWSimple\Bundle\ForoBundle\Entity\Respuesta;
 use MWSimple\Bundle\ForoBundle\Form\RespuestaType;
 use MWSimple\Bundle\ForoBundle\Form\RespuestaFilterType;
@@ -20,252 +21,88 @@ use MWSimple\Bundle\ForoBundle\Form\RespuestaFilterType;
  */
 class RespuestaController extends Controller
 {
-    /**
-     * Configuration file.
-     */
-    protected $config = array(
-        'yml' => '/../Resources/config/Respuesta.yml',
-    );
+    public function newAction($entrada_id) {
+        $entrada = $this->getEntrada($entrada_id);
+        $usuario = $this->get('security.context')->getToken()->getUser();
+        $respuesta = new Respuesta();
+        $respuesta->setEntrada($entrada);
+        $respuesta->setMiembro($usuario);
+        $form   = $this->createForm(new RespuestaType(), $respuesta);
 
-    protected function getConfig(){
-        $configs = Yaml::parse(file_get_contents(__DIR__ . $this->config['yml']));
-        foreach ($configs as $key => $value) {
-            $config[$key] = $value;
-        }
-        foreach ($this->config as $key => $value) {
-            if ($key != 'yml') {
-                $config[$key] = $value;
-            }
-        }
-        return $config;
-    }
-
-    /**
-     * Lists all Respuesta entities.
-     *
-     * @Route("/", name="foro_respuesta")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $this->config['filterType'] = new RespuestaFilterType();
-        $response = parent::indexAction();
-
-        return $response;
+        return $this->render('MWSimpleForoBundle:Respuesta:form.html.twig', array(
+            'entrada' => $entrada,
+            'form'   => $form->createView()
+        ));
     }
 
     /**
      * Creates a new Respuesta entity.
      *
-     * @Route("/", name="foro_respuesta_create")
+     * @Route("/{entrada_id}", name="foro_respuesta_create")
      * @Method("POST")
-     * @Template("MWSimpleForoBundle:Respuesta:new.html.twig")
+     * @Template("MWSimpleForoBundle:Respuesta:create.html.twig")
      */
-    public function createAction()
+    public function createAction($entrada_id)
     {
-        $config = $this->getConfig();
+        $entrada = $this->getEntrada($entrada_id);
+        $usuario = $this->get('security.context')->getToken()->getUser();
+        $respuesta = new Respuesta();
+        $respuesta->setEntrada($entrada);
+        $respuesta->setMiembro($usuario);
         $request = $this->getRequest();
-        $entity = new $config['entity']();
-        $form   = $this->createCreateForm($config, $entity);
+        $form   = $this->createForm(new RespuestaType(), $respuesta);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($respuesta);
             $em->flush();
-            $this->useACL($entity, 'create');
 
-            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
-
-            if (!array_key_exists('saveAndAdd', $config)) {
-                $config['saveAndAdd'] = true;
-            } elseif ($config['saveAndAdd'] != false) {
-                $config['saveAndAdd'] = true;
-            }
-
-            if ($config['saveAndAdd']) {
-                $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? $this->generateUrl($config['new'])
-                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
-            } else {
-                $nextAction = $this->generateUrl('foro_mws');
-            }
-
-            return $this->redirect($nextAction);
+            // Redirect 
+            return $this->redirect($this->generateUrl('foro_mws', array(
+                'foro_id' => $entrada->getGrupo()->getId())) .
+                '#respuesta-' . $respuesta->getId()
+            );
         }
 
-        $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
-
-        // remove the form to return to the view
-        unset($config['newType']);
-
-        return array(
-            'config' => $config,
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a entity.
-    * @param array $config
-    * @param $entity The entity
-    * @return \Symfony\Component\Form\Form The form
-    */
-    protected function createCreateForm($config, $entity)
-    {
-        $form = $this->createForm($config['newType'], $entity, array(
-            'action' => $this->generateUrl($config['create']),
-            'method' => 'POST',
+        return $this->render('MWSimpleForoBundle:Respuesta:create.html.twig', array(
+            'respuesta' => $respuesta,
+            'form'    => $form->createView()
         ));
+    }
 
-        $form
-            ->add('save', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'publicar',
-                'attr'               => array(
-                    'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
-                )
-            ))
-        ;
 
-        if (!array_key_exists('saveAndAdd', $config)) {
-            $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] != false) {
-            $config['saveAndAdd'] = true;
+    protected function getEntrada($entrada_id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entrada = $em->getRepository('MWSimpleForoBundle:Entrada')->find($entrada_id);
+
+        if (!$entrada) {
+            throw $this->createNotFoundException('Unable to find Grupo post.');
         }
 
-        if ($config['saveAndAdd']) {
-            $form
-                ->add('saveAndAdd', 'submit', array(
-                    'translation_domain' => 'MWSimpleAdminCrudBundle',
-                    'label'              => 'views.new.saveAndAdd',
-                    'attr'               => array(
-                        'class' => 'form-control btn-primary',
-                        'col'   => 'col-lg-3',
-                    )
-                ))
-            ;
-        }
-
-        return $form;
+        return $entrada;
     }
 
     /**
-     * Displays a form to create a new Respuesta entity.
+     * Finds and delete a Respuesta entity.
      *
-     * @Route("/new", name="foro_respuesta_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->config['newType'] = new RespuestaType();
-        $response = parent::newAction();
-
-        return $response;
-    }
-
-    /**
-     * Finds and displays a Respuesta entity.
-     *
-     * @Route("/{id}", name="foro_respuesta_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $response = parent::showAction($id);
-
-        return $response;
-    }
-
-    /**
-     * Displays a form to edit an existing Respuesta entity.
-     *
-     * @Route("/{id}/edit", name="foro_respuesta_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $this->config['editType'] = new RespuestaType();
-        $response = parent::editAction($id);
-
-        return $response;
-    }
-
-    /**
-     * Edits an existing Respuesta entity.
-     *
-     * @Route("/{id}", name="foro_respuesta_update")
-     * @Method("PUT")
-     * @Template("MWSimpleForoBundle:Respuesta:edit.html.twig")
-     */
-    public function updateAction($id)
-    {
-        $this->config['editType'] = new RespuestaType();
-        $response = parent::updateAction($id);
-
-        return $response;
-    }
-
-    /**
-     * Deletes a Respuesta entity.
-     *
-     * @Route("/{id}", name="foro_respuesta_delete")
+     * @Route("/id/{respuesta_id}", name="borrar_respuesta", options={"expose"=true})
      * @Method("DELETE")
      */
-    public function deleteAction($id)
-    {
-        $response = parent::deleteAction($id);
+    public function deletedRespuesta(Request $request, $respuesta_id) {
+        $request = $this->getRequest();
+        $response = new Response();
 
-        return $response;
-    }
+        $em = $this->getDoctrine()->getManager();
+        $respuesta = $em->getRepository('MWSimpleForoBundle:Respuesta')->find($respuesta_id);
+        
+        $em->remove($respuesta);
+        $em->flush();
 
-    /**
-     * Exporter Respuesta.
-     *
-     * @Route("/exporter/{format}", name="foro_respuesta_export")
-     */
-    public function getExporter($format)
-    {
-        $response = parent::exportCsvAction($format);
-
-        return $response;
-    }
-
-    /**
-     * Autocomplete a Respuesta entity.
-     *
-     * @Route("/autocomplete-forms/get-miembro", name="Respuesta_autocomplete_miembro")
-     */
-    public function getAutocompleteUser()
-    {
-        $options = array(
-            'repository' => "MWSimpleForoBundle:Usuario",
-            'field'      => "id",
-        );
-        $response = parent::getAutocompleteFormsMwsAction($options);
-
-        return $response;
-    }
-
-    /**
-     * Autocomplete a Respuesta entity.
-     *
-     * @Route("/autocomplete-forms/get-entrada", name="Respuesta_autocomplete_entrada")
-     */
-    public function getAutocompleteEntrada()
-    {
-        $options = array(
-            'repository' => "MWSimpleForoBundle:Entrada",
-            'field'      => "id",
-        );
-        $response = parent::getAutocompleteFormsMwsAction($options);
-
+        // Redirect 
         return $response;
     }
 }
