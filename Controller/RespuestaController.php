@@ -3,6 +3,7 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -93,18 +94,15 @@ class RespuestaController extends Controller
      */
     public function deletedRespuesta(Request $request, $respuesta_id) {
         $request = $this->getRequest();
+        $response = new Response();
 
         $em = $this->getDoctrine()->getManager();
         $respuesta = $em->getRepository('MWSimpleForoBundle:Respuesta')->find($respuesta_id);
-        $entrada = $respuesta->getEntrada();
+        
         $em->remove($respuesta);
         $em->flush();
 
         // Redirect 
-        return $this->redirect($this->generateUrl('foro_mws', array(
-            'foro_id' => $entrada->getGrupo()->getId())) .
-            '#respuesta-' . '0'
-        );
-        
+        return $response;
     }
 }

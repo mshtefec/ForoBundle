@@ -3,6 +3,7 @@
 namespace MWSimple\Bundle\ForoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -84,5 +85,26 @@ class EntradaController extends Controller
         }
 
         return $grupo;
+    }
+
+    /**
+     * Finds and delete a Entrada entity.
+     *
+     * @Route("/id/{entrada_id}", name="borrar_entrada", options={"expose"=true})
+     * @Method("DELETE")
+     */
+    public function deletedEntrada(Request $request, $entrada_id) {
+        $request = $this->getRequest();
+        $response = new Response();
+
+        $em = $this->getDoctrine()->getManager();
+        $entrada = $em->getRepository('MWSimpleForoBundle:Entrada')->find($entrada_id);
+        //$response->setContent("borrado");
+
+        $em->remove($entrada);
+        $em->flush();
+
+        // Redirect 
+        return $response;
     }
 }
