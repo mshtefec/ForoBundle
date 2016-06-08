@@ -1,7 +1,7 @@
 <h4 class="media-heading">{{ foro.nombre }}</h4>
 <ul class="list-inline list-unstyled">
 	<li>
-		<span><i class="glyphicon glyphicon-calendar"></i> 20 de Abril del 2016</span>
+		<span><i class="glyphicon glyphicon-calendar"></i> {{ foro.updatedAt|localizeddate('full', 'none', 'es') }}</span>
 	</li>
 	<li>|</li>
 		<span><i class="glyphicon glyphicon-tags"></i> {{ foro.entradas|length }} Entrada/s</span>

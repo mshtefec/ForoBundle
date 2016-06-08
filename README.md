@@ -6,6 +6,10 @@
 - Pueden crear debates los editores del grupo y los miembros incluidos en el grupo.
 - Los editores o miembros del grupo pueden responder al debate.
 
+## Installation
+
+### Using composer
+
 Add following lines to your `composer.json` file:
 
 ### Support Symfony 2.7.* + Include Boostrap 3
@@ -28,6 +32,20 @@ Add it to the `AppKernel.php` class:
 ```php
 // ...
 new MWSimple\Bundle\ForoBundle\MWSimpleForoBundle(),
+```
+
+Register the bundle:
+
+```php
+// app/AppKernel.php
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+    );
+    // ...
+}
 ```
 
 ## Configure Entities
@@ -63,6 +81,7 @@ imports:
     ...
 
 parameters:
+    # entity referenced to FosUserSubjectInterface
     # entity referenced to FosUserSubjectInterface in this example:
     subjectInterface: Sistema\UserBundle\Entity\User
 
@@ -90,6 +109,14 @@ mw_simple_front:
     type:     annotation
     prefix:   /foro
 
+# one route especific in this case DefaultController Index
+front_foro:
+    path: /mws_front_foro/
+    defaults:
+        _controller: MWSimpleForoBundle:Default:index
+        template:    index.html.twig
+
+# other route especific only for the foro groups create with security own, show GrupoController Index
 # one route especific only for the foro groups create with security, show GrupoController Index
 admin_foro_grupo:
     path: /admin/foro/grupo
@@ -110,6 +137,7 @@ admin_foro_grupo:
     ...
 ```
 
+### Importing yours controllers RENDERS, example front_foro view
 ## OR Configure your own annotations route for the foro.
 
 #### In any Controller
