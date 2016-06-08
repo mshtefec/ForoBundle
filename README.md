@@ -6,10 +6,6 @@
 - Pueden crear debates los editores del grupo y los miembros incluidos en el grupo.
 - Los editores o miembros del grupo pueden responder al debate.
 
-## Installation
-
-### Using composer
-
 Add following lines to your `composer.json` file:
 
 ### Support Symfony 2.7.* + Include Boostrap 3
@@ -34,6 +30,20 @@ Add it to the `AppKernel.php` class:
 new MWSimple\Bundle\ForoBundle\MWSimpleForoBundle(),
 ```
 
+Register the bundle:
+
+```php
+// app/AppKernel.php
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+    );
+    // ...
+}
+```
+
 ## Configure Entities
 
 #### Implements Interface FosUserSubjectInterface in YOU UserFos Entity
@@ -52,6 +62,7 @@ class User extends BaseUser implements FosUserSubjectInterface  {
     {
         return $this->username;
     }
+
     ...
 }
 ```
@@ -62,11 +73,13 @@ class User extends BaseUser implements FosUserSubjectInterface  {
 imports:
     # ForoBundle services
     - { resource: "@MWSimpleForoBundle/Resources/config/services.yml" }
+
     ...
 
 parameters:
-    # entity referenced to FosUserSubjectInterface
+    # entity referenced to FosUserSubjectInterface in this example:
     subjectInterface: Sistema\UserBundle\Entity\User
+
     ...
 
 # Doctrine Configuration
@@ -77,6 +90,7 @@ doctrine:
         resolve_target_entities:
             # configuration of the parameters attach fos
             MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface: "%subjectInterface%"
+
     ...
 ```
 
@@ -90,23 +104,50 @@ mw_simple_front:
     type:     annotation
     prefix:   /foro
 
-# one route especific in this case DefaultController Index
-front_foro:
-    path: /mws_front_foro/
-    defaults:
-        _controller: MWSimpleForoBundle:Default:index
-        template:    index.html.twig
-
-# other route especific only for the foro groups create with security own, show GrupoController Index
+# one route especific only for the foro groups create with security, show GrupoController Index
 admin_foro_grupo:
     path: /admin/foro/grupo
     defaults:
         _controller: MWSimpleForoBundle:Grupo:index
         template:    index.html.twig
+
+# route for redirect view after create new entry
+# foro_mws:
+#     pattern: /matriculado/foro/{foro_id}
+#     defaults:
+#         _controller: SistemaCPCEBundle:Default:foro
+#         template:    index.html.twig
+#     requirements:
+#         _method:  GET
+#         foro_id: \d+
+
     ...
 ```
 
-### Importing yours controllers RENDERS, example front_foro view
+## OR Configure your own annotations route for the foro.
+
+#### In any Controller
+```php
+...
+class defaultController  {
+    ...
+    
+    /**
+     * @Route("/foro/{foro_id}", name="foro_mws")
+     * @Template()
+     */
+    public function foroAction($foro_id = 0)
+    {
+         
+        //Create a view of foro.html.twig for render Front of ForoBundle
+        return array('foro_id' => $foro_id);
+    }
+
+    ...
+}
+```
+
+### Importing yours controllers RENDERS, example front_foro view in TWIG
 #### in this case is the Front view of ForoBundle
 ```twig
     {# corresponds to the configurations in yours routing.yml #}

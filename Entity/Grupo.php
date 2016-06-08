@@ -5,12 +5,14 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\GrupoRepository;
 use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Grupo
  *
  * @ORM\Table(name="mws_grupo")
  * @ORM\Entity(repositoryClass="MWSimple\Bundle\ForoBundle\Entity\GrupoRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Grupo
 {
@@ -55,6 +57,12 @@ class Grupo
      * @ORM\JoinTable(name="mws_entrada")
      */
     private $entradas;
+
+    /**
+     * Hook timestampable behavior
+     * updates createdAt, updatedAt fields
+     */
+    use TimestampableEntity;
 
     /**
      * Get id

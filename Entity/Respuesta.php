@@ -5,12 +5,14 @@ namespace MWSimple\Bundle\ForoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use MWSimple\Bundle\ForoBundle\Entity\RespuestaRepository;
 use MWSimple\Bundle\ForoBundle\Model\FosUserSubjectInterface;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Respuesta
  *
  * @ORM\Table(name="mws_respuesta")
  * @ORM\Entity(repositoryClass="MWSimple\Bundle\ForoBundle\Entity\RespuestaRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Respuesta
 {
@@ -45,6 +47,12 @@ class Respuesta
      * })
      */
     private $entrada;
+
+    /**
+     * Hook timestampable behavior
+     * updates createdAt, updatedAt fields
+     */
+    use TimestampableEntity;
 
     /**
      * Get id

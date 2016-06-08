@@ -11,8 +11,11 @@
                     {% endif %}    
 					<div class="media">
 				      	<div class="media-body">
-				    		<h4 class="media-heading">
+				    		<h4 class="media-heading" style="text-align: left;">
 				    			{{ respuesta.miembro }}
+                                <span style="float:right; margin-right: 10px; margin-top: 4px; font-size: small;">
+                                    {{ respuesta.updatedAt|localizeddate('none', 'short', 'es') }} ({{ respuesta.updatedAt|ago }})
+                                </span>    
 				    		</h4>
 							{{ respuesta.contenido|raw }}
 				       	</div>

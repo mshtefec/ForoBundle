@@ -16,7 +16,7 @@
 
 							<ul class="list-inline list-unstyled">
 					  			<li>
-					  				<span><i class="glyphicon glyphicon-calendar"></i> 21 de Abril del 2016</span>
+					  				<span><i class="glyphicon glyphicon-calendar"></i> {{ entrada.updatedAt|localizeddate('full', 'none', 'es') }}</span>
 					  			</li>
 					            <li>|</li>
 					            	<span><i class="glyphicon glyphicon-comment"></i> {{ entrada.respuestas|length }} Respuesta/s</span>
