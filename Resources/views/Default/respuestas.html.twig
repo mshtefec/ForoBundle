@@ -33,7 +33,14 @@
         $(document).ready(function () {
             
         });
-        $(".deleteRespuesta").click(function (e) {
+        $(".deleteRespuesta").confirmation({
+            title: 'va a eliminar respuesta?',
+            btnOkLabel: 'Si',
+            btnCancelLabel: 'No',
+            popout: true,
+            placement: 'left'
+        })
+        $(".deleteRespuesta").on('confirmed.bs.confirmation', function (e) {
             bloquearPantalla();
             var respuestaId = $(this).data('id');
             var url = Routing.generate('borrar_respuesta', { respuesta_id: respuestaId });
