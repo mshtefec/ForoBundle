@@ -28,7 +28,7 @@ class Respuesta
     /**
      * @var string
      *
-     * @ORM\Column(name="contenido", type="text")
+     * @ORM\Column(name="contenido", type="text", nullable=false)
      */
     private $contenido;
 
