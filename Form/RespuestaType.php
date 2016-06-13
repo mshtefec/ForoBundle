@@ -22,7 +22,7 @@ class RespuestaType extends AbstractType
             ->add('contenido', 'textarea', array(
                 'attr' => array(
                     'class'       => "form-control",
-                    'placeholder' => "Welcome to the New Response (example response)",
+                    'placeholder' => "Esta es una nueva Respuesta (Respuesta de Ejemplo)",
                 )
             ))
             // ->add('miembro', 'select2', array(

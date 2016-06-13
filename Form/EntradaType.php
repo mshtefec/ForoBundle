@@ -22,7 +22,7 @@ class EntradaType extends AbstractType
             ->add('titulo', null, array(
                 'attr' => array(
                     'class'       => "form-control",
-                    'placeholder' => "Welcome to the New Entry (example title)",
+                    'placeholder' => "Bienvenido a la nueva Entrada (Titulo de Ejemplo)",
                 )
             ))
             // ->add('idForo', 'hidden', array(
