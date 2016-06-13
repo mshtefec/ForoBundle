@@ -49,7 +49,7 @@ class Entrada
     private $grupo;
 
     /**
-     * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Respuesta", mappedBy="entrada")
+     * @ORM\OneToMany(targetEntity="MWSimple\Bundle\ForoBundle\Entity\Respuesta", mappedBy="entrada", cascade={"remove"})
      */
     private $respuestas;
 
