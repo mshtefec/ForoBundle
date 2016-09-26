@@ -47,7 +47,7 @@ class GrupoController extends Controller
     /**
      * Lists all Grupo entities.
      *
-     * @Route("/", name="admin_grupo_foro")
+     * @Route("/", name="foro_grupo")
      * @Method("GET")
      * @Template()
      */
@@ -71,9 +71,55 @@ class GrupoController extends Controller
         $subject = $this->container->getParameter('subjectInterface');
 
         $this->config['newType'] = new GrupoType($subject);
-        $response = parent::createAction();
+        
+        $config = $this->getConfig();
+        $request = $this->getRequest();
+        $entity = new $config['entity']();
+        $form   = $this->createCreateForm($config, $entity);
+        $form->handleRequest($request);
 
-        return $response;
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            //Agrego al propio usuario que crea el grupo a editores
+            $usuario = $this->get('security.context')->getToken()->getUser();
+            $roles = $usuario->getUserRoles()->getValues();
+            ladybug_dump_die($usuario);
+            $entity->addEditor($usuario);
+
+            $em->persist($entity);
+            $em->flush();
+            $this->useACL($entity, 'create');
+
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+
+            if (!array_key_exists('saveAndAdd', $config)) {
+                $config['saveAndAdd'] = true;
+            } elseif ($config['saveAndAdd'] != false) {
+                $config['saveAndAdd'] = true;
+            }
+
+            if ($config['saveAndAdd']) {
+                $nextAction = $form->get('saveAndAdd')->isClicked()
+                ? $this->generateUrl($config['new'])
+                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+            } else {
+                $nextAction = $this->generateUrl($config['show'], array('id' => $entity->getId()));
+            }
+
+            return $this->redirect($nextAction);
+        }
+
+        $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
+
+        // remove the form to return to the view
+        unset($config['newType']);
+
+        return array(
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
     }
 
     /**
@@ -110,7 +156,7 @@ class GrupoController extends Controller
     /**
      * Displays a form to edit an existing Grupo entity.
      *
-     * @Route("/{id}/edit", name="foro_grupo_edit")
+     * @Route("/edit/{id}", name="foro_grupo_edit")
      * @Method("GET")
      * @Template()
      */
@@ -144,29 +190,12 @@ class GrupoController extends Controller
     /**
      * Deletes a Grupo entity.
      *
-     * @Route("/{id}", name="foro_grupo_delete")
+     * @Route("/delete/{id}", name="foro_grupo_delete")
      * @Method("DELETE")
      */
     public function deleteAction($id)
     {
         $response = parent::deleteAction($id);
-
-        return $response;
-    }
-
-    /**
-     * Lists all Users FOS entities.
-     *
-     * @Route("/usersfos", name="admin_grupo_foro_usersfos")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexUsersFosAction()
-    {
-        $subject = $this->container->getParameter('subjectInterface');
-        
-        $this->config['filterType'] = new GrupoFilterType();
-        $response = parent::indexAction();
 
         return $response;
     }

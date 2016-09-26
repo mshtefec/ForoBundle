@@ -22,7 +22,7 @@ use Symfony\Component\Yaml\Yaml;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/{foro_id}", name="mws_front_foro", options={"expose"=true}))
+     * @Route("/{foro_id}", name="foro_front", options={"expose"=true}))
      * @Method("GET")
      */
     public function indexAction(Request $request, $foro_id = null) {

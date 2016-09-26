@@ -14,7 +14,14 @@
                 </div>
                 <div class="panel-body">
                     {% block form %}
-                        {{ form(form) }}
+                        {#{ form(form) }#}
+                        {{ form_start(form) }}
+                            {{ form_row(form.nombre) }}
+                            {{ form_row(form.miembros) }}
+                            {% if is_granted('ROLE_SUPERADMIN') %}
+                                {{ form_row(form.editores) }}
+                            {% endif %}
+                        {{ form_end(form) }}
                     {% endblock %}
                 </div>
             </div>
