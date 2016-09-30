@@ -27,23 +27,11 @@ fieldsshow:
         label: 'Nombre'
         name: 'Nombre'
         type: 'string'
-        #class: 'col-lg-12'
-        #closerow: true
+        class: 'col-lg-8'
+        closerow: true
     a.miembros:
         label: 'Miembros'
         name: 'Miembros'
         type: 'ONE_TO_MANY'
         #class: 'col-lg-12'
         #closerow: true
-    a.editores:
-        label: 'Editores'
-        name: 'Editores'
-        type: 'ONE_TO_MANY'
-        #class: 'col-lg-12'
-        #closerow: true
-    # a.entrada:
-    #     label: 'Entrada'
-    #     name: 'Entrada'
-    #     type: 'ONE_TO_MANY'
-    #     #class: 'col-lg-12'
-    #     #closerow: true

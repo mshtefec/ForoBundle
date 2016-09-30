@@ -58,9 +58,12 @@ class DefaultController extends Controller
         $foro = $em->getRepository('MWSimpleForoBundle:Grupo')->find($foro_id);
         $entradas = $em->getRepository('MWSimpleForoBundle:Entrada')->getEntradasForo($foro_id);
         
+        $usuario = $this->get('security.context')->getToken()->getUser();
+        
         return $this->render('MWSimpleForoBundle:Default:foro.html.twig', array(
             'foro' => $foro,
             'entradas' => $entradas,
+            'usuario' => $usuario,
         ));
         
     }

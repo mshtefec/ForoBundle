@@ -39,11 +39,11 @@ class GrupoType extends AbstractType
                     'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
                 )
             ))
-            ->add('editores', 'select2', array(
+            ->add('creador', 'select2', array(
                 'class' => $this->subjectInterface,
-                'url'   => 'Grupo_autocomplete_miembros',
+                'url'   => 'Grupo_autocomplete_creador',
                 'configs' => array(
-                    'multiple' => true,//required true or false
+                    'multiple' => false,//required true or false
                     'width'    => 'off',
                 ),
                 'attr' => array(

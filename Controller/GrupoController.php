@@ -81,11 +81,8 @@ class GrupoController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             
-            //Agrego al propio usuario que crea el grupo a editores
             $usuario = $this->get('security.context')->getToken()->getUser();
-            $roles = $usuario->getUserRoles()->getValues();
-            ladybug_dump_die($usuario);
-            $entity->addEditor($usuario);
+            $entity->setCreador($usuario);
 
             $em->persist($entity);
             $em->flush();
@@ -218,6 +215,34 @@ class GrupoController extends Controller
      * @Route("/autocomplete-forms/get-miembros", name="Grupo_autocomplete_miembros")
      */
     public function getAutocompleteUser()
+    {
+        $request = $this->getRequest();
+        $term = $request->query->get('q', null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $userManager = $this->get('fos_user.user_manager');
+        $entities = $userManager->findUserByUsernameOrEmail($term);
+
+        $array = array();
+
+        $array[] = array(
+            'id'   => $entities->getId(),
+            'text' => $entities->__toString(),
+        );
+
+        $response = new JsonResponse();
+        $response->setData($array);
+
+        return $response;
+    }
+
+    /**
+     * Autocomplete a Grupo entity.
+     *
+     * @Route("/autocomplete-forms/get-creador", name="Grupo_autocomplete_creador")
+     */
+    public function getAutocompleteCreador()
     {
         $request = $this->getRequest();
         $term = $request->query->get('q', null);
