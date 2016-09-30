@@ -153,7 +153,7 @@ class GrupoController extends Controller
     /**
      * Displays a form to edit an existing Grupo entity.
      *
-     * @Route("/edit/{id}", name="foro_grupo_edit")
+     * @Route("/{id}/edit", name="foro_grupo_edit")
      * @Method("GET")
      * @Template()
      */
@@ -187,7 +187,7 @@ class GrupoController extends Controller
     /**
      * Deletes a Grupo entity.
      *
-     * @Route("/delete/{id}", name="foro_grupo_delete")
+     * @Route("/{id}/delete", name="foro_grupo_delete")
      * @Method("DELETE")
      */
     public function deleteAction($id)
